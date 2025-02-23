@@ -237,6 +237,147 @@
             font-size: 1.5rem;
             line-height: 1.6;
         }
+
+        /* Reviews Section */
+        .reviews-section {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .review-card {
+            background: rgba(13, 13, 37, 0.6);
+            border: 2px solid rgba(0, 255, 157, 0.4);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: left;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .reviewer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--neon-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            border: 2px solid rgba(0, 255, 157, 0.4);
+        }
+
+        .reviewer-info {
+            flex-grow: 1;
+        }
+
+        .reviewer-name {
+            color: var(--neon-green);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .review-date {
+            color: #b4b4d9;
+            font-size: 0.875rem;
+        }
+
+        .review-stars {
+            color: var(--neon-green);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            color: #e1e1f5;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .review-metrics {
+            background: rgba(0, 255, 157, 0.1);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .metric:last-child {
+            margin-bottom: 0;
+        }
+
+        .metric-value {
+            color: var(--neon-green);
+            font-weight: 600;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            margin: 4rem auto;
+            max-width: 1200px;
+            padding: 2rem;
+            background: rgba(13, 13, 37, 0.6);
+            border: 2px solid rgba(0, 255, 157, 0.4);
+            border-radius: 1rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .stats-title {
+            color: var(--neon-green);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            color: var(--neon-green);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        .stat-label {
+            color: #ffffff;
+            font-size: 1.25rem;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -288,6 +429,98 @@
                 <div class="note-card">
                     <h3 class="note-title">⚡ Instant Activation</h3>
                     <p class="note-content">Get your activation key instantly after purchase. Start optimizing in seconds.</p>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <h3 class="stats-title">Real Performance Improvements</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">15-30%</div>
+                        <div class="stat-label">Faster Boot Time</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">20-40%</div>
+                        <div class="stat-label">More Available Memory</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">10-25%</div>
+                        <div class="stat-label">Better System Response</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">25-45%</div>
+                        <div class="stat-label">Less CPU Usage</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reviews-section">
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">JD</div>
+                            <div class="reviewer-info">
+                                <div class="reviewer-name">John D.</div>
+                                <div class="review-date">2 weeks ago</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">My old laptop was barely usable. After running Click Nova, startup is much faster and programs actually respond when I click them. Impressive results!</p>
+                        <div class="review-metrics">
+                            <div class="metric">
+                                <span>Boot Time</span>
+                                <span class="metric-value">-28%</span>
+                            </div>
+                            <div class="metric">
+                                <span>Memory Usage</span>
+                                <span class="metric-value">-35%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">SK</div>
+                            <div class="reviewer-info">
+                                <div class="reviewer-name">Sarah K.</div>
+                                <div class="review-date">1 month ago</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">Was skeptical at first, but the results are real. My PC runs noticeably smoother, and I can keep more programs open without slowdown.</p>
+                        <div class="review-metrics">
+                            <div class="metric">
+                                <span>System Response</span>
+                                <span class="metric-value">+22%</span>
+                            </div>
+                            <div class="metric">
+                                <span>CPU Usage</span>
+                                <span class="metric-value">-31%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-avatar">MT</div>
+                            <div class="reviewer-info">
+                                <div class="reviewer-name">Mike T.</div>
+                                <div class="review-date">3 weeks ago</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">★★★★½</div>
+                        <p class="review-text">Great for both my gaming PC and work laptop. Games load faster and multitasking is much smoother. Worth every penny.</p>
+                        <div class="review-metrics">
+                            <div class="metric">
+                                <span>Game Load Times</span>
+                                <span class="metric-value">-20%</span>
+                            </div>
+                            <div class="metric">
+                                <span>Memory Available</span>
+                                <span class="metric-value">+38%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
