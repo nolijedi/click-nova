@@ -1,5 +1,5 @@
 
-import { cpu, gpu, hardDrive, ram } from "lucide-react";
+import { Cpu, HardDrive, MonitorSmartphone as Gpu, Memory as Ram } from "lucide-react";
 import MetricCard from "@/components/ui/metric-card";
 import PerformanceChart from "@/components/ui/performance-chart";
 import { OptimizeButton } from "@/components/optimize-button";
@@ -33,25 +33,25 @@ const Index = () => {
           <MetricCard
             title="CPU Usage"
             value="45%"
-            icon={<cpu className="h-4 w-4" />}
+            icon={<Cpu className="h-4 w-4" />}
             trend="down"
           />
           <MetricCard
             title="GPU Temperature"
             value="65°C"
-            icon={<gpu className="h-4 w-4" />}
+            icon={<Gpu className="h-4 w-4" />}
             trend="neutral"
           />
           <MetricCard
             title="RAM Usage"
             value="8.2 GB"
-            icon={<ram className="h-4 w-4" />}
+            icon={<Ram className="h-4 w-4" />}
             trend="up"
           />
           <MetricCard
             title="Storage"
             value="256 GB"
-            icon={<hardDrive className="h-4 w-4" />}
+            icon={<HardDrive className="h-4 w-4" />}
             trend="neutral"
           />
         </div>
