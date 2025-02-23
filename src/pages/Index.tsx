@@ -1,9 +1,12 @@
 
-import { Terminal, Cpu, HardDrive, MonitorSmartphone as Gpu, Microchip } from "lucide-react";
+import { Terminal, Cpu, HardDrive, MonitorSmartphone as Gpu, Microchip, Play, FileBarChart, ArrowRight } from "lucide-react";
 import MetricCard from "@/components/ui/metric-card";
 import PerformanceChart from "@/components/ui/performance-chart";
 import { OptimizeButton } from "@/components/optimize-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const optimizationSteps = [
   {
@@ -83,7 +86,97 @@ const optimizationSteps = [
   }
 ];
 
+interface SystemMetrics {
+  cpuUsage: number;
+  ramUsage: number;
+  diskSpace: number;
+  temperature: number;
+}
+
 const Index = () => {
+  const [currentStep, setCurrentStep] = useState<"initial" | "scan" | "report" | "optimize" | "final">("initial");
+  const [initialMetrics, setInitialMetrics] = useState<SystemMetrics | null>(null);
+  const [finalMetrics, setFinalMetrics] = useState<SystemMetrics | null>(null);
+
+  const simulateScan = async () => {
+    setCurrentStep("scan");
+    toast.info("Scanning system...");
+    
+    // Simulate scanning delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    const metrics: SystemMetrics = {
+      cpuUsage: Math.round(Math.random() * 30 + 60), // 60-90%
+      ramUsage: Math.round(Math.random() * 40 + 50), // 50-90%
+      diskSpace: Math.round(Math.random() * 20 + 70), // 70-90%
+      temperature: Math.round(Math.random() * 15 + 60), // 60-75°C
+    };
+    
+    setInitialMetrics(metrics);
+    setCurrentStep("report");
+    toast.success("System scan complete!");
+  };
+
+  const runOptimizations = async () => {
+    setCurrentStep("optimize");
+    toast.info("Running optimization commands...");
+    
+    // Simulate optimization delay
+    for (const step of optimizationSteps) {
+      toast.info(`Running: ${step.title}`);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    const improvedMetrics: SystemMetrics = {
+      cpuUsage: Math.round((initialMetrics?.cpuUsage || 0) * 0.7),
+      ramUsage: Math.round((initialMetrics?.ramUsage || 0) * 0.6),
+      diskSpace: Math.round((initialMetrics?.diskSpace || 0) * 0.8),
+      temperature: Math.round((initialMetrics?.temperature || 0) * 0.85),
+    };
+    
+    setFinalMetrics(improvedMetrics);
+    setCurrentStep("final");
+    toast.success("Optimizations complete!");
+  };
+
+  const renderMetricComparison = () => {
+    if (!initialMetrics || !finalMetrics) return null;
+
+    const comparisonData = [
+      {
+        name: "Before",
+        cpu: initialMetrics.cpuUsage,
+        ram: initialMetrics.ramUsage,
+        disk: initialMetrics.diskSpace,
+        temp: initialMetrics.temperature,
+      },
+      {
+        name: "After",
+        cpu: finalMetrics.cpuUsage,
+        ram: finalMetrics.ramUsage,
+        disk: finalMetrics.diskSpace,
+        temp: finalMetrics.temperature,
+      },
+    ];
+
+    return (
+      <div className="grid gap-6 md:grid-cols-2">
+        <PerformanceChart
+          data={comparisonData.map(d => ({ timestamp: d.name, value: d.cpu }))}
+          title="CPU Usage Improvement"
+          description="Lower is better"
+          className="glass-morphism"
+        />
+        <PerformanceChart
+          data={comparisonData.map(d => ({ timestamp: d.name, value: d.ram }))}
+          title="RAM Usage Improvement"
+          description="Lower is better"
+          className="glass-morphism"
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#1A1F2C] text-foreground p-6">
       <main className="container mx-auto space-y-8">
@@ -96,59 +189,81 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="flex justify-center">
-          <OptimizeButton className="w-full max-w-md glass-morphism" />
+        <div className="flex justify-center gap-4">
+          {currentStep === "initial" && (
+            <Button
+              onClick={simulateScan}
+              className="glass-morphism border border-[#4361EE]/20 hover:border-[#4361EE]/50"
+            >
+              <Play className="mr-2 h-4 w-4" /> Start System Scan
+            </Button>
+          )}
+          
+          {currentStep === "report" && (
+            <Button
+              onClick={runOptimizations}
+              className="glass-morphism border border-[#8B5CF6]/20 hover:border-[#8B5CF6]/50"
+            >
+              <ArrowRight className="mr-2 h-4 w-4" /> Run Optimizations
+            </Button>
+          )}
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <MetricCard
-            title="CPU Usage"
-            value="45%"
-            icon={<Cpu className="h-4 w-4 text-[#4361EE]" />}
-            trend="down"
-            className="glass-morphism border border-[#4361EE]/20 hover:border-[#4361EE]/50 transition-all duration-300"
-          />
-          <MetricCard
-            title="GPU Temperature"
-            value="65°C"
-            icon={<Gpu className="h-4 w-4 text-[#8B5CF6]" />}
-            trend="neutral"
-            className="glass-morphism border border-[#8B5CF6]/20 hover:border-[#8B5CF6]/50 transition-all duration-300"
-          />
-          <MetricCard
-            title="RAM Usage"
-            value="8.2 GB"
-            icon={<Microchip className="h-4 w-4 text-[#D946EF]" />}
-            trend="up"
-            className="glass-morphism border border-[#D946EF]/20 hover:border-[#D946EF]/50 transition-all duration-300"
-          />
-          <MetricCard
-            title="Storage"
-            value="256 GB"
-            icon={<HardDrive className="h-4 w-4 text-[#F97316]" />}
-            trend="neutral"
-            className="glass-morphism border border-[#F97316]/20 hover:border-[#F97316]/50 transition-all duration-300"
-          />
-        </div>
+        {(initialMetrics || finalMetrics) && (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <MetricCard
+              title="CPU Usage"
+              value={`${finalMetrics?.cpuUsage || initialMetrics?.cpuUsage}%`}
+              icon={<Cpu className="h-4 w-4 text-[#4361EE]" />}
+              trend={finalMetrics ? "down" : "neutral"}
+              className="glass-morphism border border-[#4361EE]/20 hover:border-[#4361EE]/50 transition-all duration-300"
+            />
+            <MetricCard
+              title="Temperature"
+              value={`${finalMetrics?.temperature || initialMetrics?.temperature}°C`}
+              icon={<Gpu className="h-4 w-4 text-[#8B5CF6]" />}
+              trend={finalMetrics ? "down" : "neutral"}
+              className="glass-morphism border border-[#8B5CF6]/20 hover:border-[#8B5CF6]/50 transition-all duration-300"
+            />
+            <MetricCard
+              title="RAM Usage"
+              value={`${finalMetrics?.ramUsage || initialMetrics?.ramUsage}%`}
+              icon={<Microchip className="h-4 w-4 text-[#D946EF]" />}
+              trend={finalMetrics ? "down" : "up"}
+              className="glass-morphism border border-[#D946EF]/20 hover:border-[#D946EF]/50 transition-all duration-300"
+            />
+            <MetricCard
+              title="Disk Usage"
+              value={`${finalMetrics?.diskSpace || initialMetrics?.diskSpace}%`}
+              icon={<HardDrive className="h-4 w-4 text-[#F97316]" />}
+              trend={finalMetrics ? "down" : "neutral"}
+              className="glass-morphism border border-[#F97316]/20 hover:border-[#F97316]/50 transition-all duration-300"
+            />
+          </div>
+        )}
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {optimizationSteps.map((step, index) => (
-            <Card key={index} className="glass-morphism border border-[#4361EE]/20 hover:border-[#4361EE]/50 transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Terminal className="h-5 w-5 text-[#4361EE]" />
-                  {step.title}
-                </CardTitle>
-                <CardDescription>{step.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-[#8B5CF6]">
-                  {step.command}
-                </code>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {currentStep === "final" && renderMetricComparison()}
+
+        {(currentStep === "report" || currentStep === "optimize") && (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {optimizationSteps.map((step, index) => (
+              <Card key={index} className="glass-morphism border border-[#4361EE]/20 hover:border-[#4361EE]/50 transition-all duration-300">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Terminal className="h-5 w-5 text-[#4361EE]" />
+                    {step.title}
+                  </CardTitle>
+                  <CardDescription>{step.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-[#8B5CF6]">
+                    {step.command}
+                  </code>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );
