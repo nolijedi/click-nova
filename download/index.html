@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click Nova - Enterprise Performance Suite</title>
+    <title>Click Nova - One-Click System Optimizer</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
     <style>
@@ -31,11 +31,6 @@
             transform: translateY(-5px);
             box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
         }
-        .performance-bar {
-            height: 30px;
-            background: linear-gradient(90deg, #00ff9d, #00a6ff);
-            transition: width 1s ease-in-out;
-        }
     </style>
 </head>
 <body class="cyberpunk-bg min-h-screen text-white">
@@ -43,21 +38,86 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h1 class="text-6xl font-bold mb-8 glow">Click Nova</h1>
-                <p class="text-2xl mb-12 text-blue-400">Enterprise-Grade System Optimization</p>
+                <p class="text-2xl mb-12 text-blue-400">One Click. Better Performance.</p>
                 
-                <!-- Performance Stats -->
+                <!-- Key Features -->
                 <div class="grid md:grid-cols-3 gap-8 mb-16">
                     <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">Real-Time</div>
-                        <div class="text-gray-300">CPU Usage Monitoring</div>
+                        <div class="text-4xl font-bold text-green-400 mb-2">1-Click</div>
+                        <div class="text-gray-300">Startup Optimization</div>
                     </div>
                     <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">Active</div>
-                        <div class="text-gray-300">Memory Tracking</div>
+                        <div class="text-4xl font-bold text-green-400 mb-2">Smart</div>
+                        <div class="text-gray-300">Memory Management</div>
                     </div>
                     <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">Live</div>
-                        <div class="text-gray-300">System Metrics</div>
+                        <div class="text-4xl font-bold text-green-400 mb-2">Auto</div>
+                        <div class="text-gray-300">Process Priority</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optimization Features -->
+            <div class="bg-gray-900 bg-opacity-50 rounded-lg p-8 mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-center">One-Click Optimizations</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Startup Optimizer</h4>
+                                <p class="text-gray-400">Disable unnecessary startup programs for faster boot times</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Memory Cleanup</h4>
+                                <p class="text-gray-400">Free up unused memory and optimize running processes</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Process Priority</h4>
+                                <p class="text-gray-400">Automatically adjust process priorities for better performance</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Service Optimizer</h4>
+                                <p class="text-gray-400">Optimize Windows services for your usage pattern</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Network Settings</h4>
+                                <p class="text-gray-400">Optimize network settings for faster internet</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-bold">Power Settings</h4>
+                                <p class="text-gray-400">Balance performance and power consumption</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,19 +133,19 @@
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Real-Time CPU Monitoring
+                            Basic Startup Optimization
                         </li>
                         <li class="flex items-center">
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Memory Usage Tracking
+                            Simple Memory Cleanup
                         </li>
                         <li class="flex items-center">
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Basic System Info
+                            Basic Process Management
                         </li>
                     </ul>
                     <a href="ClickNova.zip" download class="neon-button block text-center bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700">
@@ -103,25 +163,25 @@
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Enhanced UI Theme
+                            Advanced Startup Manager
                         </li>
                         <li class="flex items-center">
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Performance History
+                            Smart Process Priority
                         </li>
                         <li class="flex items-center">
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Custom Alerts
+                            Network Optimization
                         </li>
                         <li class="flex items-center">
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Email Support
+                            Auto-Optimization
                         </li>
                     </ul>
                     <button onclick="checkout('pro')" class="neon-button block w-full bg-green-400 text-black px-6 py-3 rounded-lg font-bold hover:bg-green-500">
@@ -138,19 +198,19 @@
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Multiple System Support
+                            Multi-System Support
                         </li>
                         <li class="flex items-center">
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Advanced Analytics
+                            Custom Optimization Profiles
                         </li>
                         <li class="flex items-center">
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Custom Reports
+                            Scheduled Optimization
                         </li>
                         <li class="flex items-center">
                             <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,38 +225,8 @@
                 </div>
             </div>
 
-            <!-- Performance Metrics -->
-            <div class="bg-gray-900 bg-opacity-50 rounded-lg p-8 mb-16">
-                <h3 class="text-2xl font-bold mb-8 text-center">System Monitoring Features</h3>
-                <div class="space-y-6">
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span>CPU Usage Tracking</span>
-                            <span class="text-green-400">Real-Time</span>
-                        </div>
-                        <div class="bg-gray-700 rounded-full">
-                            <div class="performance-bar rounded-full w-[90%]"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span>Memory Analysis</span>
-                            <span class="text-green-400">Live Updates</span>
-                        </div>
-                        <div class="bg-gray-700 rounded-full">
-                            <div class="performance-bar rounded-full w-[80%]"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span>System Information</span>
-                            <span class="text-green-400">Continuous</span>
-                        </div>
-                        <div class="bg-gray-700 rounded-full">
-                            <div class="performance-bar rounded-full w-[70%]"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="mt-12 text-sm text-gray-400 text-center">
+                <p> 2025 Click Nova. All rights reserved.</p>
             </div>
         </div>
     </div>
@@ -213,18 +243,6 @@
                 alert('Connecting you with our sales team...');
             }
         }
-
-        // Animate performance bars
-        document.addEventListener('DOMContentLoaded', () => {
-            const bars = document.querySelectorAll('.performance-bar');
-            bars.forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = '0';
-                setTimeout(() => {
-                    bar.style.width = width;
-                }, 100);
-            });
-        });
     </script>
 </body>
 </html>
