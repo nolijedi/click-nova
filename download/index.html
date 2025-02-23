@@ -62,14 +62,15 @@
         /* Header Image */
         .header-image {
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto 2rem;
+            max-width: 600px;
+            margin: 0 auto;
             display: block;
         }
 
         .header-container {
-            padding: 2rem 1rem;
+            padding: 3rem 1rem 1rem;
             text-align: center;
+            margin-bottom: 2rem;
         }
 
         /* Glass Card Effect */
@@ -507,24 +508,33 @@
         /* Payment Methods */
         .payment-methods {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
-            margin-top: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 4rem;
         }
 
         .payment-method {
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .payment-method img {
-            height: 24px;
+            height: 32px;
             width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -538,19 +548,18 @@
     <div class="bg-overlay"></div>
 
     <!-- Main Content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper relative z-10">
         <div class="header-container">
             <img src="images/header.png" alt="Click Nova" class="header-image">
         </div>
 
         <div class="text-center">
-            <h1>Click Nova</h1>
             <p class="subtitle">One Click. Super Performance.</p>
             
             <button onclick="handlePurchase()" class="neon-button">
                 Purchase & Download ($1.99)
             </button>
-            <div class="payment-methods mt-4">
+            <div class="payment-methods">
                 <div class="payment-method">
                     <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/visa.svg" alt="Visa">
                 </div>
