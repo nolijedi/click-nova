@@ -1,17 +1,41 @@
 
-import { Cpu, HardDrive, MonitorSmartphone as Gpu, Microchip } from "lucide-react";
+import { Terminal, Cpu, HardDrive, MonitorSmartphone as Gpu, Microchip } from "lucide-react";
 import MetricCard from "@/components/ui/metric-card";
 import PerformanceChart from "@/components/ui/performance-chart";
 import { OptimizeButton } from "@/components/optimize-button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-const mockPerformanceData = [
-  { timestamp: "00:00", value: 45 },
-  { timestamp: "01:00", value: 52 },
-  { timestamp: "02:00", value: 49 },
-  { timestamp: "03:00", value: 63 },
-  { timestamp: "04:00", value: 58 },
-  { timestamp: "05:00", value: 71 },
-  { timestamp: "06:00", value: 73 },
+const optimizationSteps = [
+  {
+    title: "Clean Temporary Files",
+    command: "cleanmgr.exe",
+    description: "Windows Disk Cleanup utility to remove temporary files",
+  },
+  {
+    title: "Check Disk Health",
+    command: "chkdsk C: /f",
+    description: "Scan and fix disk errors (requires restart)",
+  },
+  {
+    title: "System File Check",
+    command: "sfc /scannow",
+    description: "Scan and repair Windows system files",
+  },
+  {
+    title: "Memory Diagnostic",
+    command: "mdsched.exe",
+    description: "Windows Memory Diagnostic tool (requires restart)",
+  },
+  {
+    title: "Performance Monitor",
+    command: "perfmon.exe",
+    description: "Monitor real-time system performance",
+  },
+  {
+    title: "Power Configuration",
+    command: "powercfg /energy",
+    description: "Generate power efficiency diagnostics report",
+  }
 ];
 
 const Index = () => {
@@ -23,7 +47,7 @@ const Index = () => {
             Click Nova
           </h1>
           <p className="text-xl text-[#8B5CF6]">
-            {"<"} Ignite Your System's True Potential {"/>"}
+            {"<"} Command Prompt Optimization Guide {"/>"}
           </p>
         </div>
 
@@ -62,22 +86,23 @@ const Index = () => {
           />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <PerformanceChart
-            data={mockPerformanceData}
-            title="System Performance"
-            description="Real-time system metrics analysis"
-            className="glass-morphism border border-[#4361EE]/20 hover:border-[#4361EE]/50 transition-all duration-300"
-          />
-          <PerformanceChart
-            data={mockPerformanceData.map((d) => ({
-              ...d,
-              value: d.value * 0.8,
-            }))}
-            title="Memory Usage"
-            description="Dynamic memory allocation tracking"
-            className="glass-morphism border border-[#8B5CF6]/20 hover:border-[#8B5CF6]/50 transition-all duration-300"
-          />
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {optimizationSteps.map((step, index) => (
+            <Card key={index} className="glass-morphism border border-[#4361EE]/20 hover:border-[#4361EE]/50 transition-all duration-300">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Terminal className="h-5 w-5 text-[#4361EE]" />
+                  {step.title}
+                </CardTitle>
+                <CardDescription>{step.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-[#8B5CF6]">
+                  {step.command}
+                </code>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </main>
     </div>
