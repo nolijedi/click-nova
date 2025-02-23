@@ -35,6 +35,51 @@ const optimizationSteps = [
     title: "Power Configuration",
     command: "powercfg /energy",
     description: "Generate power efficiency diagnostics report",
+  },
+  {
+    title: "DISM Health Check",
+    command: "DISM /Online /Cleanup-Image /CheckHealth",
+    description: "Check Windows image for corruption",
+  },
+  {
+    title: "Network Reset",
+    command: "netsh winsock reset",
+    description: "Reset network configuration to default",
+  },
+  {
+    title: "DNS Cache Flush",
+    command: "ipconfig /flushdns",
+    description: "Clear DNS resolver cache",
+  },
+  {
+    title: "Group Policy Update",
+    command: "gpupdate /force",
+    description: "Force update of Group Policy settings",
+  },
+  {
+    title: "Boot Configuration",
+    command: "bcdedit /enum",
+    description: "Display boot configuration data",
+  },
+  {
+    title: "Driver Query",
+    command: "driverquery",
+    description: "List all installed device drivers",
+  },
+  {
+    title: "Task List",
+    command: "tasklist /svc",
+    description: "Display all running processes and services",
+  },
+  {
+    title: "Resource Monitor",
+    command: "resmon",
+    description: "Launch Resource Monitor for detailed analysis",
+  },
+  {
+    title: "Reliability Report",
+    command: "perfmon /rel",
+    description: "View system reliability history",
   }
 ];
 
