@@ -9,8 +9,12 @@
     <style>
         .cyberpunk-bg {
             background: linear-gradient(45deg, #0a0a1f, #16213e);
-            position: relative;
-            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
         }
         .cyberpunk-bg::before {
             content: '';
@@ -96,108 +100,117 @@
             transform: translateY(-5px);
             box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
         }
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
     </style>
 </head>
-<body class="cyberpunk-bg min-h-screen text-white">
-    <div class="container mx-auto px-4 py-16">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h1 class="text-6xl font-bold mb-8 glow">Click Nova</h1>
-                <p class="text-2xl mb-4 text-blue-400">One Click. Maximum Performance.</p>
-                <p class="text-xl mb-12 text-green-400">Single-Use Optimization Key • One-Time Purchase</p>
-                
-                <!-- Key Features -->
-                <div class="grid md:grid-cols-3 gap-8 mb-16">
-                    <div class="feature-card rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">Instant</div>
-                        <div class="text-gray-300">System Boost</div>
-                    </div>
-                    <div class="feature-card rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">One-Time</div>
-                        <div class="text-gray-300">Activation</div>
-                    </div>
-                    <div class="feature-card rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">Permanent</div>
-                        <div class="text-gray-300">Results</div>
+<body>
+    <div class="cyberpunk-bg"></div>
+    <div class="content-wrapper">
+        <div class="container mx-auto px-4 py-16">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h1 class="text-6xl font-bold mb-8 glow">Click Nova</h1>
+                    <p class="text-2xl mb-4 text-blue-400">One Click. Maximum Performance.</p>
+                    <p class="text-xl mb-12 text-green-400">Single-Use Optimization Key • One-Time Purchase</p>
+                    
+                    <!-- Key Features -->
+                    <div class="grid md:grid-cols-3 gap-8 mb-16">
+                        <div class="feature-card rounded-lg p-6">
+                            <div class="text-4xl font-bold text-green-400 mb-2">Instant</div>
+                            <div class="text-gray-300">System Boost</div>
+                        </div>
+                        <div class="feature-card rounded-lg p-6">
+                            <div class="text-4xl font-bold text-green-400 mb-2">One-Time</div>
+                            <div class="text-gray-300">Activation</div>
+                        </div>
+                        <div class="feature-card rounded-lg p-6">
+                            <div class="text-4xl font-bold text-green-400 mb-2">Permanent</div>
+                            <div class="text-gray-300">Results</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Single Purchase Option -->
-            <div class="feature-card rounded-lg p-8 max-w-xl mx-auto mb-16 text-center">
-                <div class="text-5xl font-bold mb-4 glow">$1.99</div>
-                <div class="text-xl text-green-400 mb-8">One-Time Purchase • Single Activation Key</div>
-                
-                <ul class="space-y-4 mb-8 text-left">
-                    <li class="flex items-center">
-                        <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <div>
-                            <span class="font-bold">Unique Activation Key</span>
-                            <p class="text-sm text-gray-400">Single-use key bound to your system</p>
-                        </div>
-                    </li>
-                    <li class="flex items-center">
-                        <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <div>
-                            <span class="font-bold">Complete System Optimization</span>
-                            <p class="text-sm text-gray-400">Startup, Memory, Services, Network & More</p>
-                        </div>
-                    </li>
-                    <li class="flex items-center">
-                        <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <div>
-                            <span class="font-bold">Before/After Benchmarks</span>
-                            <p class="text-sm text-gray-400">See your performance improvement</p>
-                        </div>
-                    </li>
-                    <li class="flex items-center">
-                        <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <div>
-                            <span class="font-bold">Permanent Optimization</span>
-                            <p class="text-sm text-gray-400">Results persist after activation</p>
-                        </div>
-                    </li>
-                </ul>
-                
-                <button onclick="checkout()" class="neon-button w-full text-white px-8 py-4 rounded-lg font-bold text-xl">
-                    Purchase & Download ($1.99)
-                </button>
-                
-                <p class="text-sm text-gray-400 mt-4">Instant delivery • Secure payment • 24-hour support</p>
-            </div>
+                <!-- Single Purchase Option -->
+                <div class="feature-card rounded-lg p-8 max-w-xl mx-auto mb-16 text-center">
+                    <div class="text-5xl font-bold mb-4 glow">$1.99</div>
+                    <div class="text-xl text-green-400 mb-8">One-Time Purchase • Single Activation Key</div>
+                    
+                    <ul class="space-y-4 mb-8 text-left">
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <span class="font-bold">Unique Activation Key</span>
+                                <p class="text-sm text-gray-400">Single-use key bound to your system</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <span class="font-bold">Complete System Optimization</span>
+                                <p class="text-sm text-gray-400">Startup, Memory, Services, Network & More</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <span class="font-bold">Before/After Benchmarks</span>
+                                <p class="text-sm text-gray-400">See your performance improvement</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <div>
+                                <span class="font-bold">Permanent Optimization</span>
+                                <p class="text-sm text-gray-400">Results persist after activation</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <button onclick="checkout()" class="neon-button w-full text-white px-8 py-4 rounded-lg font-bold text-xl">
+                        Purchase & Download ($1.99)
+                    </button>
+                    
+                    <p class="text-sm text-gray-400 mt-4">Instant delivery • Secure payment • 24-hour support</p>
+                </div>
 
-            <!-- How It Works -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold mb-8 text-center glow">How It Works</h3>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="feature-card rounded-lg p-6 text-center">
-                        <div class="text-3xl font-bold text-green-400 mb-4">1</div>
-                        <h4 class="font-bold mb-2">Purchase</h4>
-                        <p class="text-sm text-gray-400">Get your unique activation key instantly after purchase</p>
-                    </div>
-                    <div class="feature-card rounded-lg p-6 text-center">
-                        <div class="text-3xl font-bold text-green-400 mb-4">2</div>
-                        <h4 class="font-bold mb-2">Activate</h4>
-                        <p class="text-sm text-gray-400">Enter your key to start the optimization process</p>
-                    </div>
-                    <div class="feature-card rounded-lg p-6 text-center">
-                        <div class="text-3xl font-bold text-green-400 mb-4">3</div>
-                        <h4 class="font-bold mb-2">Enjoy</h4>
-                        <p class="text-sm text-gray-400">Experience permanent performance improvements</p>
+                <!-- How It Works -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-bold mb-8 text-center glow">How It Works</h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="feature-card rounded-lg p-6 text-center">
+                            <div class="text-3xl font-bold text-green-400 mb-4">1</div>
+                            <h4 class="font-bold mb-2">Purchase</h4>
+                            <p class="text-sm text-gray-400">Get your unique activation key instantly after purchase</p>
+                        </div>
+                        <div class="feature-card rounded-lg p-6 text-center">
+                            <div class="text-3xl font-bold text-green-400 mb-4">2</div>
+                            <h4 class="font-bold mb-2">Activate</h4>
+                            <p class="text-sm text-gray-400">Enter your key to start the optimization process</p>
+                        </div>
+                        <div class="feature-card rounded-lg p-6 text-center">
+                            <div class="text-3xl font-bold text-green-400 mb-4">3</div>
+                            <h4 class="font-bold mb-2">Enjoy</h4>
+                            <p class="text-sm text-gray-400">Experience permanent performance improvements</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mt-12 text-sm text-gray-400 text-center">
-                <p> 2025 Click Nova. All rights reserved.</p>
+                <div class="mt-12 text-sm text-gray-400 text-center">
+                    <p> 2025 Click Nova. All rights reserved.</p>
+                </div>
             </div>
         </div>
     </div>
