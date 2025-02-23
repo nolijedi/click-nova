@@ -1,8 +1,8 @@
 {
-  "name": "clicknova",
+  "name": "click-nova",
   "private": true,
   "version": "1.0.0",
-  "description": "ClickNova - Next-Gen System Optimization Suite with Cyberpunk Aesthetics",
+  "description": "Click Nova - Next-Gen System Optimization Suite with Cyberpunk Aesthetics",
   "scripts": {
     "start": "node start.js",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
