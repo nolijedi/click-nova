@@ -2,16 +2,25 @@ const express = require('express');
 const cors = require('cors');
 const { exec } = require('child_process');
 const util = require('util');
+const path = require('path');
 const execPromise = util.promisify(exec);
 
 const app = express();
 
-// Configure CORS to accept requests from any origin
+// Configure CORS and JSON parsing
 app.use(cors({
   origin: '*',
-  methods: ['GET'],
+  methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Accept']
 }));
+app.use(express.json());
+
+// Serve static files from the download directory
+app.use('/download', express.static(path.join(__dirname, '../download')));
+
+// Import and use payment routes
+const paymentRoutes = require('./payment');
+app.use('/api', paymentRoutes);
 
 async function getSystemMetrics() {
   try {

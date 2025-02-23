@@ -325,12 +325,85 @@
     </div>
 
     <script>
-        const stripe = Stripe('your_publishable_key');
+        const stripe = Stripe('your_stripe_publishable_key'); // Replace with your Stripe publishable key
 
-        function checkout() {
-            // In a real implementation, this would create a Stripe session
-            // and redirect to checkout
-            alert('Redirecting to checkout...');
+        async function checkout() {
+            try {
+                // Show loading state
+                const button = document.querySelector('.neon-button');
+                const originalText = button.innerText;
+                button.innerText = 'Processing...';
+                button.disabled = true;
+
+                // Create checkout session
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create checkout session');
+                }
+
+                const { url } = await response.json();
+                
+                // Redirect to Stripe checkout
+                window.location.href = url;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Sorry, something went wrong. Please try again.');
+                
+                // Reset button
+                const button = document.querySelector('.neon-button');
+                button.innerText = 'Purchase & Download ($1.99)';
+                button.disabled = false;
+            }
+        }
+
+        // Handle success redirect
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+
+            if (sessionId) {
+                try {
+                    const response = await fetch(`/api/success?session_id=${sessionId}`);
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Show success modal with activation key
+                        showSuccessModal(data.activationKey);
+                        
+                        // Start download
+                        window.location.href = data.downloadUrl;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to process payment. Please contact support.');
+                }
+            }
+        });
+
+        function showSuccessModal(activationKey) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="fixed inset-0 bg-black bg-opacity-50"></div>
+                <div class="relative bg-navy-900 p-8 rounded-lg max-w-md w-full mx-4 border-2 border-green-400">
+                    <h2 class="text-2xl font-bold mb-4 text-green-400">Thank You for Your Purchase!</h2>
+                    <p class="mb-4 text-white">Your activation key:</p>
+                    <div class="bg-navy-800 p-4 rounded mb-4 font-mono text-green-400 select-all">
+                        ${activationKey}
+                    </div>
+                    <p class="text-gray-300 mb-6">Please save this key. You'll need it to activate Click Nova.</p>
+                    <button onclick="this.closest('.fixed').remove()" class="neon-button w-full">
+                        Got it!
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
         }
     </script>
 </body>
