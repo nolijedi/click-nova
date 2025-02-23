@@ -76,12 +76,12 @@
 
         /* Glass Card Effect */
         .feature-card {
-            background: rgba(13, 13, 37, 0.6);
-            border: 2px solid rgba(0, 255, 157, 0.4);
+            background: rgba(13, 13, 37, 0.95);
+            border: 2px solid var(--neon-green);
             backdrop-filter: blur(8px);
             box-shadow: 
-                0 0 20px rgba(0, 255, 157, 0.3),
-                0 8px 32px rgba(0, 0, 0, 0.2);
+                0 0 20px rgba(0, 255, 157, 0.2),
+                0 0 40px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
             padding: 3rem !important;
             text-align: center;
@@ -95,7 +95,7 @@
         .feature-card:hover {
             transform: translateY(-5px);
             border-color: var(--neon-green);
-            background: rgba(13, 13, 37, 0.7);
+            background: rgba(13, 13, 37, 0.95);
             box-shadow: 
                 0 0 30px rgba(0, 255, 157, 0.5),
                 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -150,38 +150,136 @@
 
         /* Text Contrast Improvements */
         .subtitle {
-            font-size: 3rem !important;
-            font-weight: 600;
-            margin: 2rem 0;
-            color: #ffffff;
+            font-size: 4rem !important;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #fff 0%, #7fffd4 50%, #fff 100%);
+            background-size: 200% auto;
+            color: #fff;
+            background-clip: text;
+            text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
             text-shadow: 
-                0 0 10px rgba(0, 0, 0, 0.8),
-                0 0 20px rgba(0, 0, 0, 0.8),
-                0 0 30px rgba(0, 0, 0, 0.8);
-            background: rgba(0, 0, 0, 0.4);
-            padding: 1rem 2rem;
-            border-radius: 1rem;
-            display: inline-block;
+                0 0 20px rgba(0, 255, 157, 0.5),
+                0 0 40px rgba(0, 255, 157, 0.3),
+                0 0 60px rgba(0, 255, 157, 0.2);
         }
 
-        /* Text Styles */
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Animated Slogan */
+        .slogan-container {
+            margin: 3rem 0;
+            position: relative;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 2rem;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Enhanced Contrast for Cards */
+        .note-card {
+            background: rgba(13, 13, 37, 0.95);
+            border: 2px solid var(--neon-green);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 157, 0.2),
+                0 0 40px rgba(0, 0, 0, 0.4);
+        }
+
         .feature-number {
-            font-size: 3rem;
-            color: var(--neon-green);
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 20px var(--neon-green);
+            text-shadow: 
+                0 0 10px var(--neon-green),
+                0 0 20px var(--neon-green);
         }
 
         .feature-title {
-            color: var(--neon-green);
-            font-size: 2rem;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
             font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .feature-description {
             color: #e1e1f5;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Users Counter Enhancement */
+        .users-counter {
+            background: linear-gradient(135deg, rgba(13, 13, 37, 0.97) 0%, rgba(22, 33, 62, 0.97) 100%);
+            border: 3px solid var(--neon-green);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 157, 0.3),
+                0 0 60px rgba(0, 0, 0, 0.5);
+            padding: 3rem;
+        }
+
+        .counter-number {
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #fff, #7fffd4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 
+                0 0 20px rgba(0, 255, 157, 0.5),
+                0 0 40px rgba(0, 255, 157, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .counter-text {
+            font-size: 2rem;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+
+        .counter-subtext {
+            font-size: 1.5rem;
+            color: #b4b4d9;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Step Numbers Enhancement */
+        .step-number {
+            font-size: 5rem;
+            color: var(--neon-green);
+            text-shadow: 
+                0 0 20px var(--neon-green),
+                0 0 40px var(--neon-green);
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .step-title {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            font-weight: 600;
+        }
+
+        .step-description {
             font-size: 1.25rem;
+            color: #e1e1f5;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
             line-height: 1.6;
         }
 
@@ -594,9 +692,11 @@
             <img src="images/header.png" alt="Click Nova" class="header-image">
         </div>
 
-        <div class="text-center">
+        <div class="slogan-container">
             <p class="subtitle">One Click. Super Performance.</p>
-            
+        </div>
+
+        <div class="text-center">
             <div class="users-counter">
                 <div class="counter-number">127,492</div>
                 <div class="counter-text">Happy Users Worldwide</div>
@@ -636,6 +736,24 @@
                     <div class="feature-number">3</div>
                     <h3 class="feature-title">Enjoy</h3>
                     <p class="feature-description">Experience permanent performance improvements</p>
+                </div>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Purchase</div>
+                    <div class="step-description">Get your unique activation key instantly after purchase</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Activate</div>
+                    <div class="step-description">Enter your key to start the optimization process</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Enjoy</div>
+                    <div class="step-description">Experience permanent performance improvements</div>
                 </div>
             </div>
 
