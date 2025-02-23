@@ -1,7 +1,7 @@
-import express from 'express';
-import cors from 'cors';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+const express = require('express');
+const cors = require('cors');
+const { exec } = require('child_process');
+const { promisify } = require('util');
 
 const execAsync = promisify(exec);
 const app = express();
@@ -24,12 +24,12 @@ const ALLOWED_COMMANDS = [
   'Start-Process'
 ];
 
-function escapePowerShellCommand(command: string): string {
+function escapePowerShellCommand(command) {
   // Escape double quotes and wrap the entire command in double quotes
   return `"${command.replace(/"/g, '`"')}"`;
 }
 
-async function executeCommand(command: string): Promise<string> {
+async function executeCommand(command) {
   try {
     // Special handling for cleanmgr.exe
     if (command.includes('cleanmgr.exe')) {
@@ -57,7 +57,7 @@ async function executeCommand(command: string): Promise<string> {
   }
 }
 
-async function getSystemMetricsWithRetry(retries = 3): Promise<any> {
+async function getSystemMetricsWithRetry(retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       // Get CPU usage using performance counter with error handling
@@ -145,5 +145,5 @@ app.post('/api/execute', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`System server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
