@@ -1,5 +1,5 @@
 
-import { Cpu, HardDrive, MonitorSmartphone as Gpu, Memory as Ram } from "lucide-react";
+import { Cpu, HardDrive, MonitorSmartphone as Gpu, Ram } from "lucide-react";
 import MetricCard from "@/components/ui/metric-card";
 import PerformanceChart from "@/components/ui/performance-chart";
 import { OptimizeButton } from "@/components/optimize-button";
