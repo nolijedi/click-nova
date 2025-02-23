@@ -9,25 +9,90 @@
     <style>
         .cyberpunk-bg {
             background: linear-gradient(45deg, #0a0a1f, #16213e);
+            position: relative;
+            overflow: hidden;
+        }
+        .cyberpunk-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                rgba(0, 255, 157, 0.1) 0%,
+                rgba(0, 166, 255, 0.1) 25%,
+                rgba(255, 0, 157, 0.1) 50%,
+                rgba(255, 166, 0, 0.1) 75%
+            );
+            animation: glowBg 20s linear infinite;
+        }
+        @keyframes glowBg {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
         .glow {
             text-shadow: 0 0 10px #00ff9d, 0 0 20px #00ff9d, 0 0 30px #00ff9d;
+            animation: textPulse 2s ease-in-out infinite;
+        }
+        @keyframes textPulse {
+            0%, 100% { text-shadow: 0 0 10px #00ff9d, 0 0 20px #00ff9d, 0 0 30px #00ff9d; }
+            50% { text-shadow: 0 0 20px #00ff9d, 0 0 40px #00ff9d, 0 0 60px #00ff9d; }
         }
         .neon-button {
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            border: 2px solid #00ff9d;
+            background: rgba(0, 255, 157, 0.1);
+        }
+        .neon-button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            background: linear-gradient(45deg, #00ff9d, #00a6ff, #ff00dd, #00ff9d);
+            background-size: 400%;
+            z-index: -1;
+            animation: glowingBorder 20s linear infinite;
+        }
+        @keyframes glowingBorder {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
         }
         .neon-button:hover {
             box-shadow: 0 0 20px #00ff9d;
             transform: translateY(-2px);
+            color: #000;
+            background: #00ff9d;
         }
-        .premium-card {
+        .feature-card {
             background: rgba(10, 10, 31, 0.9);
             border: 1px solid #00ff9d;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .premium-card:hover {
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            background: linear-gradient(45deg, #00ff9d, #00a6ff, #ff00dd, #00ff9d);
+            background-size: 400%;
+            z-index: -1;
+            animation: glowingBorder 20s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
         }
@@ -38,190 +103,96 @@
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
                 <h1 class="text-6xl font-bold mb-8 glow">Click Nova</h1>
-                <p class="text-2xl mb-12 text-blue-400">One Click. Better Performance.</p>
+                <p class="text-2xl mb-4 text-blue-400">One Click. Maximum Performance.</p>
+                <p class="text-xl mb-12 text-green-400">Single-Use Optimization Key • One-Time Purchase</p>
                 
                 <!-- Key Features -->
                 <div class="grid md:grid-cols-3 gap-8 mb-16">
-                    <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">1-Click</div>
-                        <div class="text-gray-300">Startup Optimization</div>
+                    <div class="feature-card rounded-lg p-6">
+                        <div class="text-4xl font-bold text-green-400 mb-2">Instant</div>
+                        <div class="text-gray-300">System Boost</div>
                     </div>
-                    <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">Smart</div>
-                        <div class="text-gray-300">Memory Management</div>
+                    <div class="feature-card rounded-lg p-6">
+                        <div class="text-4xl font-bold text-green-400 mb-2">One-Time</div>
+                        <div class="text-gray-300">Activation</div>
                     </div>
-                    <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6">
-                        <div class="text-4xl font-bold text-green-400 mb-2">Auto</div>
-                        <div class="text-gray-300">Process Priority</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Optimization Features -->
-            <div class="bg-gray-900 bg-opacity-50 rounded-lg p-8 mb-16">
-                <h3 class="text-2xl font-bold mb-8 text-center">One-Click Optimizations</h3>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <div>
-                                <h4 class="font-bold">Startup Optimizer</h4>
-                                <p class="text-gray-400">Disable unnecessary startup programs for faster boot times</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <div>
-                                <h4 class="font-bold">Memory Cleanup</h4>
-                                <p class="text-gray-400">Free up unused memory and optimize running processes</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <div>
-                                <h4 class="font-bold">Process Priority</h4>
-                                <p class="text-gray-400">Automatically adjust process priorities for better performance</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <div>
-                                <h4 class="font-bold">Service Optimizer</h4>
-                                <p class="text-gray-400">Optimize Windows services for your usage pattern</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <div>
-                                <h4 class="font-bold">Network Settings</h4>
-                                <p class="text-gray-400">Optimize network settings for faster internet</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <svg class="w-6 h-6 text-green-400 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <div>
-                                <h4 class="font-bold">Power Settings</h4>
-                                <p class="text-gray-400">Balance performance and power consumption</p>
-                            </div>
-                        </div>
+                    <div class="feature-card rounded-lg p-6">
+                        <div class="text-4xl font-bold text-green-400 mb-2">Permanent</div>
+                        <div class="text-gray-300">Results</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Pricing Plans -->
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <!-- Basic Plan -->
-                <div class="premium-card rounded-lg p-8">
-                    <h3 class="text-2xl font-bold mb-4">Basic</h3>
-                    <div class="text-3xl font-bold mb-6">Free</div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Basic Startup Optimization
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Simple Memory Cleanup
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Basic Process Management
-                        </li>
-                    </ul>
-                    <a href="ClickNova.zip" download class="neon-button block text-center bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700">
-                        Download Free
-                    </a>
-                </div>
+            <!-- Single Purchase Option -->
+            <div class="feature-card rounded-lg p-8 max-w-xl mx-auto mb-16 text-center">
+                <div class="text-5xl font-bold mb-4 glow">$1.99</div>
+                <div class="text-xl text-green-400 mb-8">One-Time Purchase • Single Activation Key</div>
+                
+                <ul class="space-y-4 mb-8 text-left">
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <span class="font-bold">Unique Activation Key</span>
+                            <p class="text-sm text-gray-400">Single-use key bound to your system</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <span class="font-bold">Complete System Optimization</span>
+                            <p class="text-sm text-gray-400">Startup, Memory, Services, Network & More</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <span class="font-bold">Before/After Benchmarks</span>
+                            <p class="text-sm text-gray-400">See your performance improvement</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <div>
+                            <span class="font-bold">Permanent Optimization</span>
+                            <p class="text-sm text-gray-400">Results persist after activation</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <button onclick="checkout()" class="neon-button w-full text-white px-8 py-4 rounded-lg font-bold text-xl">
+                    Purchase & Download ($1.99)
+                </button>
+                
+                <p class="text-sm text-gray-400 mt-4">Instant delivery • Secure payment • 24-hour support</p>
+            </div>
 
-                <!-- Pro Plan -->
-                <div class="premium-card rounded-lg p-8 transform scale-105 border-2">
-                    <div class="absolute top-0 right-0 bg-green-400 text-black px-3 py-1 rounded-bl-lg rounded-tr-lg text-sm font-bold">POPULAR</div>
-                    <h3 class="text-2xl font-bold mb-4">Pro</h3>
-                    <div class="text-3xl font-bold mb-6">$9.99<span class="text-sm">/month</span></div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Advanced Startup Manager
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Smart Process Priority
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Network Optimization
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Auto-Optimization
-                        </li>
-                    </ul>
-                    <button onclick="checkout('pro')" class="neon-button block w-full bg-green-400 text-black px-6 py-3 rounded-lg font-bold hover:bg-green-500">
-                        Upgrade to Pro
-                    </button>
-                </div>
-
-                <!-- Enterprise Plan -->
-                <div class="premium-card rounded-lg p-8">
-                    <h3 class="text-2xl font-bold mb-4">Enterprise</h3>
-                    <div class="text-3xl font-bold mb-6">$24.99<span class="text-sm">/month</span></div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Multi-System Support
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Custom Optimization Profiles
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Scheduled Optimization
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Priority Support
-                        </li>
-                    </ul>
-                    <button onclick="checkout('enterprise')" class="neon-button block w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700">
-                        Contact Sales
-                    </button>
+            <!-- How It Works -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-center glow">How It Works</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card rounded-lg p-6 text-center">
+                        <div class="text-3xl font-bold text-green-400 mb-4">1</div>
+                        <h4 class="font-bold mb-2">Purchase</h4>
+                        <p class="text-sm text-gray-400">Get your unique activation key instantly after purchase</p>
+                    </div>
+                    <div class="feature-card rounded-lg p-6 text-center">
+                        <div class="text-3xl font-bold text-green-400 mb-4">2</div>
+                        <h4 class="font-bold mb-2">Activate</h4>
+                        <p class="text-sm text-gray-400">Enter your key to start the optimization process</p>
+                    </div>
+                    <div class="feature-card rounded-lg p-6 text-center">
+                        <div class="text-3xl font-bold text-green-400 mb-4">3</div>
+                        <h4 class="font-bold mb-2">Enjoy</h4>
+                        <p class="text-sm text-gray-400">Experience permanent performance improvements</p>
+                    </div>
                 </div>
             </div>
 
@@ -234,14 +205,10 @@
     <script>
         const stripe = Stripe('your_publishable_key');
 
-        function checkout(plan) {
+        function checkout() {
             // In a real implementation, this would create a Stripe session
             // and redirect to checkout
-            if (plan === 'pro') {
-                alert('Redirecting to Pro plan checkout...');
-            } else if (plan === 'enterprise') {
-                alert('Connecting you with our sales team...');
-            }
+            alert('Redirecting to checkout...');
         }
     </script>
 </body>
