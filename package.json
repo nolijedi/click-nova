@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "description": "ClickNova - Next-Gen System Optimization Suite with Cyberpunk Aesthetics",
-  "type": "module",
   "scripts": {
+    "start": "node start.js",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "dev:frontend": "vite",
     "dev:backend": "ts-node-dev --respawn --transpile-only server/system-server.ts",
@@ -16,7 +16,8 @@
     "server:metrics": "ts-node server/metrics-server.ts",
     "server:optimization": "ts-node server/optimization-server.ts",
     "server:monitoring": "ts-node server/monitoring-server.ts",
-    "dev:all": "concurrently \"npm run dev\" \"npm run server:metrics\" \"npm run server:optimization\" \"npm run server:monitoring\""
+    "dev:all": "concurrently \"npm run dev\" \"npm run server:metrics\" \"npm run server:optimization\" \"npm run server:monitoring\"",
+    "package": "node create-package.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -83,6 +84,7 @@
     "@types/react-dom": "^18.3.0",
     "@types/ws": "^8.5.14",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "archiver": "^7.0.1",
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.2",
     "eslint": "^9.9.0",
