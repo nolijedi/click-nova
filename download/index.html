@@ -54,9 +54,22 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 4rem 2rem;
+            padding: 1rem 2rem;
             max-width: 1800px;
             margin: 0 auto;
+        }
+
+        /* Header Image */
+        .header-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            display: block;
+        }
+
+        .header-container {
+            padding: 2rem 1rem;
+            text-align: center;
         }
 
         /* Glass Card Effect */
@@ -378,6 +391,141 @@
             color: #ffffff;
             font-size: 1.25rem;
         }
+
+        /* Success Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .success-modal {
+            background: linear-gradient(135deg, rgba(13, 13, 37, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+            border: 3px solid var(--neon-green);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 157, 0.3),
+                0 0 60px rgba(0, 255, 157, 0.2),
+                0 0 90px rgba(0, 255, 157, 0.1);
+            animation: modalAppear 0.3s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-modal h2 {
+            color: var(--neon-green);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+        }
+
+        .key-container {
+            background: rgba(0, 255, 157, 0.1);
+            border: 2px solid rgba(0, 255, 157, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .key-label {
+            color: #ffffff;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .activation-key {
+            font-family: 'Courier New', monospace;
+            font-size: 2rem;
+            color: var(--neon-green);
+            letter-spacing: 2px;
+            margin: 1rem 0;
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+            user-select: all;
+        }
+
+        .copy-button {
+            background: rgba(0, 255, 157, 0.15);
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .copy-button:hover {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+        }
+
+        .success-modal p {
+            color: #ffffff;
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .modal-button {
+            font-size: 1.25rem !important;
+            padding: 1rem 2rem !important;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .payment-method {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payment-method img {
+            height: 24px;
+            width: auto;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -391,6 +539,10 @@
 
     <!-- Main Content -->
     <div class="content-wrapper">
+        <div class="header-container">
+            <img src="images/header.png" alt="Click Nova" class="header-image">
+        </div>
+
         <div class="text-center">
             <h1>Click Nova</h1>
             <p class="subtitle">One Click. Super Performance.</p>
@@ -398,6 +550,20 @@
             <button onclick="handlePurchase()" class="neon-button">
                 Purchase & Download ($1.99)
             </button>
+            <div class="payment-methods mt-4">
+                <div class="payment-method">
+                    <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/visa.svg" alt="Visa">
+                </div>
+                <div class="payment-method">
+                    <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/mastercard.svg" alt="Mastercard">
+                </div>
+                <div class="payment-method">
+                    <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/paypal.svg" alt="PayPal">
+                </div>
+                <div class="payment-method">
+                    <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/applepay.svg" alt="Apple Pay">
+                </div>
+            </div>
 
             <div class="features-grid">
                 <div class="feature-card">
@@ -562,22 +728,41 @@
 
         function showSuccessModal(activationKey) {
             const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 flex items-center justify-center z-50';
+            modal.className = 'modal-overlay';
             modal.innerHTML = `
-                <div class="fixed inset-0 bg-black bg-opacity-50"></div>
-                <div class="relative bg-navy-900 p-8 rounded-lg max-w-md w-full mx-4 border-2 border-green-400">
-                    <h2 class="text-2xl font-bold mb-4 text-green-400">Thank You for Your Purchase!</h2>
-                    <p class="mb-4 text-white">Your activation key:</p>
-                    <div class="bg-navy-800 p-4 rounded mb-4 font-mono text-green-400 select-all">
-                        ${activationKey}
+                <div class="success-modal">
+                    <h2>Thank You!</h2>
+                    <p>Your purchase was successful and the download has started.</p>
+                    
+                    <div class="key-container">
+                        <div class="key-label">Your Activation Key:</div>
+                        <div class="activation-key">${activationKey}</div>
+                        <button class="copy-button" onclick="copyKey('${activationKey}')">
+                            Copy Key
+                        </button>
                     </div>
-                    <p class="text-gray-300 mb-6">Please save this key. You'll need it to activate Click Nova.</p>
-                    <button onclick="this.closest('.fixed').remove()" class="neon-button w-full">
-                        Got it!
-                    </button>
+
+                    <p>Please save this key. You'll need it to activate Click Nova after installation.</p>
+                    
+                    <div class="modal-buttons">
+                        <button onclick="this.closest('.modal-overlay').remove()" class="neon-button modal-button">
+                            Got it!
+                        </button>
+                    </div>
                 </div>
             `;
             document.body.appendChild(modal);
+        }
+
+        function copyKey(key) {
+            navigator.clipboard.writeText(key).then(() => {
+                const copyButton = document.querySelector('.copy-button');
+                const originalText = copyButton.textContent;
+                copyButton.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyButton.textContent = originalText;
+                }, 2000);
+            });
         }
     </script>
 </body>
