@@ -1,3 +1,4 @@
+import { OptimizationGrid } from '@/components/optimization/OptimizationGrid';
 import { motion } from 'framer-motion';
 import { Zap, Shield, Cpu, LineChart, Settings, Lock, LucideIcon } from 'lucide-react';
 
@@ -42,32 +43,36 @@ const features: Feature[] = [
 
 export default function Features() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-        Features
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {features.map((feature, index) => {
-          const Icon = feature.icon;
-          return (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="group p-6 rounded-lg border border-white/10 bg-black/40 hover:border-cyan-500/50 transition-all duration-300"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-2 rounded-lg bg-cyan-500/10 group-hover:bg-cyan-500/20 transition-colors">
-                  <Icon className="h-6 w-6 text-cyan-400" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">{feature.title}</h3>
-              </div>
-              <p className="text-white/70">{feature.description}</p>
-            </motion.div>
-          );
-        })}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="space-y-8"
+    >
+      <div className="text-center space-y-4">
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent animate-glow"
+        >
+          System Optimization Suite
+        </motion.h1>
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-xl text-white/70 max-w-2xl mx-auto"
+        >
+          Enhance your system's performance with our advanced optimization tools.
+          Streamline your PC for peak efficiency.
+        </motion.p>
       </div>
-    </div>
+
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-blue-500/10 rounded-3xl backdrop-blur-sm -z-10" />
+        <OptimizationGrid />
+      </div>
+    </motion.div>
   );
 }

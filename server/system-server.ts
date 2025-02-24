@@ -21,7 +21,11 @@ const ALLOWED_COMMANDS = [
   'Remove-Item',
   'Get-StorageReliabilityCounter',
   'cleanmgr',
-  'Start-Process'
+  'Start-Process',
+  'Get-Service',
+  'Stop-Service',
+  'ipconfig',
+  'Start-MpScan'
 ];
 
 function escapePowerShellCommand(command) {
@@ -38,6 +42,13 @@ async function executeCommand(command) {
       return stdout;
     }
 
+    // Special handling for ipconfig
+    if (command.includes('ipconfig')) {
+      const { stdout, stderr } = await execAsync(command);
+      if (stderr) throw new Error(stderr);
+      return stdout;
+    }
+
     // Security check: Only allow whitelisted commands
     if (!ALLOWED_COMMANDS.some(cmd => command.toLowerCase().startsWith(cmd.toLowerCase()))) {
       throw new Error('Command not allowed for security reasons');
@@ -50,9 +61,10 @@ async function executeCommand(command) {
       console.error('Command error:', stderr);
       throw new Error(stderr);
     }
-    return stdout.trim();
+
+    return stdout;
   } catch (error) {
-    console.error('Failed to execute command:', error);
+    console.error('Error executing command:', error);
     throw error;
   }
 }
@@ -144,6 +156,22 @@ app.post('/api/execute', async (req, res) => {
   }
 });
 
+app.post('/api/system/execute', async (req, res) => {
+  try {
+    const { command } = req.body;
+    if (!command) {
+      return res.status(400).json({ error: 'Command is required' });
+    }
+
+    console.log('Executing command:', command);
+    const output = await executeCommand(command);
+    res.json({ output });
+  } catch (error) {
+    console.error('Error in /api/system/execute:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}...`);
 });

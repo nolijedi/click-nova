@@ -1,10 +1,9 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Loader2, Star, LucideIcon, CheckCircle2, AlertTriangle } from "lucide-react";
-import { toast } from "sonner";
+import { Loader2, LucideIcon, CheckCircle2, Terminal, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface OptimizationCardProps {
   id: string;
@@ -15,8 +14,8 @@ interface OptimizationCardProps {
   type: 'cmd' | 'powershell' | 'bios';
   gradientFrom: string;
   gradientTo: string;
-  xp: number;
-  onExecute: () => Promise<void>;
+  isComplete: boolean;
+  onExecute: (setOutput: (output: string) => void) => Promise<void>;
 }
 
 export function OptimizationCard({
@@ -28,18 +27,19 @@ export function OptimizationCard({
   type,
   gradientFrom,
   gradientTo,
-  xp,
+  isComplete,
   onExecute
 }: OptimizationCardProps) {
   const [isRunning, setIsRunning] = useState(false);
-  const [showXpGain, setShowXpGain] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
   const [scanProgress, setScanProgress] = useState<number>(0);
+  const [output, setOutput] = useState<string>('');
+  const [showOutput, setShowOutput] = useState(false);
 
-  const handleExecute = async () => {
+  const handleClick = async () => {
     try {
       setIsRunning(true);
       setScanProgress(0);
+      setOutput('');
       
       // Simulate scan progress
       const interval = setInterval(() => {
@@ -52,22 +52,14 @@ export function OptimizationCard({
         });
       }, 200);
 
-      await onExecute();
-      
+      await onExecute(setOutput);
       clearInterval(interval);
       setScanProgress(100);
-      setIsComplete(true);
-      setShowXpGain(true);
-      
-      setTimeout(() => {
-        setShowXpGain(false);
-      }, 2000);
-      
-      toast.success(`${title} completed successfully!`);
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
-      toast.error(`Failed to execute ${title}: ${errorMessage}`);
-      setIsComplete(false);
+      setShowOutput(true);
+    } catch (error) {
+      console.error('Failed to execute optimization:', error);
+      setOutput(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setShowOutput(true);
     } finally {
       setIsRunning(false);
     }
@@ -75,116 +67,106 @@ export function OptimizationCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+      layout
+      className={cn(
+        "relative p-4 rounded-xl transition-all duration-300",
+        "bg-black/40 border border-white/10 backdrop-blur-sm",
+        "hover:bg-gradient-to-br hover:from-black/60 hover:to-black/40",
+        isComplete && "border-green-500/30 shadow-lg shadow-green-500/20"
+      )}
     >
-      <Card 
-        id={id}
-        className={cn(
-          "group relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-xl",
-          "after:absolute after:inset-0 after:z-10 after:opacity-0 after:transition-opacity after:duration-300",
-          isComplete ? "border-green-500/50" : "border-white/10 hover:border-cyan-500/50",
-          "animate-success:after:opacity-100"
-        )}
-      >
-        <AnimatePresence>
-          {showXpGain && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="absolute -top-4 right-4 flex items-center gap-1 text-yellow-400 z-20"
+      <div className="flex items-center gap-3">
+        <div className={cn(
+          "p-2 rounded-lg",
+          `bg-gradient-to-br from-${gradientFrom} to-${gradientTo}`,
+          "shadow-lg shadow-cyan-500/20"
+        )}>
+          <Icon className="w-4 h-4 text-white" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-sm font-semibold truncate">
+            {title}
+          </h3>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <p className="text-xs text-white/70 truncate">
+                  {description}
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="max-w-xs">{description}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        <div className="flex items-center gap-2">
+          {output && (
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-8 px-2"
+              onClick={() => setShowOutput(!showOutput)}
             >
-              <Star className="h-4 w-4" />
-              <span className="font-bold">+{xp} XP</span>
-            </motion.div>
+              {showOutput ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </Button>
           )}
-        </AnimatePresence>
-
-        <div 
-          className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
-          style={{
-            background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
-          }}
-        />
-
-        <CardHeader className="p-4 pb-2">
-          <div className="flex items-center gap-2">
-            <div className={cn(
-              "p-1.5 rounded-lg transition-colors duration-300",
-              isComplete ? "bg-green-500/20" : `bg-${gradientFrom}/10`
-            )}>
-              <Icon className="h-4 w-4" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <CardTitle className="text-base flex items-center justify-between">
-                <span className="truncate">{title}</span>
-                <div className="flex items-center gap-1 text-yellow-400 text-xs ml-2 shrink-0">
-                  <Star className="h-3 w-3" />
-                  <span>{xp}</span>
-                </div>
-              </CardTitle>
-              <CardDescription className="text-xs line-clamp-1">{description}</CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent className="p-4 pt-2">
-          <div className="space-y-2">
-            {isRunning && (
-              <div className="relative h-1 bg-black/20 rounded overflow-hidden">
-                <motion.div
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-cyan-500 to-blue-500"
-                  style={{ width: `${scanProgress}%` }}
-                  transition={{ duration: 0.2 }}
-                />
-              </div>
+          <Button
+            size="sm"
+            onClick={handleClick}
+            disabled={isRunning || isComplete}
+            className={cn(
+              "bg-gradient-to-r relative min-w-[100px] h-8",
+              `from-${gradientFrom} to-${gradientTo}`,
+              "hover:opacity-90 transition-all duration-300",
+              "border border-white/10 shadow-lg",
+              `shadow-${gradientFrom}/20`,
+              isComplete && "opacity-50"
             )}
-
-            <code className="text-xs text-muted-foreground font-mono bg-black/20 p-1.5 rounded block truncate">
-              {command}
-            </code>
-
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70">
-                {type}
-              </span>
-              <Button
-                size="sm"
-                onClick={handleExecute}
-                disabled={isRunning}
-                className={cn(
-                  "relative overflow-hidden text-xs py-1 h-7",
-                  "transition-all duration-300",
-                  isComplete
-                    ? "bg-green-500 hover:bg-green-600"
-                    : cn(
-                        "bg-gradient-to-r",
-                        `from-${gradientFrom}`,
-                        `to-${gradientTo}`,
-                        "hover:opacity-90"
-                      )
-                )}
-              >
-                {isRunning ? (
-                  <>
-                    <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-                    Scanning...
-                  </>
-                ) : isComplete ? (
-                  <>
-                    <CheckCircle2 className="mr-1 h-3 w-3" />
-                    Optimized!
-                  </>
-                ) : (
-                  'Optimize Now'
-                )}
-              </Button>
+          >
+            {isRunning ? (
+              <>
+                <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                {Math.round(scanProgress)}%
+              </>
+            ) : isComplete ? (
+              <>
+                <CheckCircle2 className="w-3 h-3 mr-1" />
+                Done
+              </>
+            ) : (
+              "Optimize"
+            )}
+          </Button>
+        </div>
+      </div>
+      
+      <AnimatePresence>
+        {showOutput && output && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mt-4"
+          >
+            <div className="relative">
+              <div className="absolute left-2 top-2">
+                <Terminal className="w-4 h-4 text-white/50" />
+              </div>
+              <pre className="bg-black/50 rounded-lg p-4 pl-8 text-xs font-mono text-white/70 overflow-x-auto max-h-40">
+                {output}
+              </pre>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {isRunning && (
+        <div 
+          className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-300"
+          style={{ width: `${scanProgress}%` }}
+        />
+      )}
     </motion.div>
   );
 }

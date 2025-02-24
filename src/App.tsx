@@ -1,40 +1,39 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Layout from '@/components/layout/Layout';
+import { Layout } from '@/components/layout/Layout';
+import { Toaster } from '@/components/ui/sonner';
 import Features from '@/pages/Features';
-import Optimization from '@/pages/Optimization';
-import Monitoring from '@/pages/Monitoring';
-import Reviews from '@/pages/Reviews';
-import { GameProvider } from '@/contexts/GameContext';
-import { Toaster } from '@/components/ui/toaster';
-import { ThemeProvider } from '@/components/theme-provider';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import Benchmarks from '@/pages/Benchmarks';
+import Download from '@/pages/Download';
+import Purchase from '@/pages/Purchase';
+import Support from '@/pages/Support';
 
-const queryClient = new QueryClient();
+// Simple NotFound component
+function NotFound() {
+  return (
+    <div className="text-center">
+      <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+        404 - Page Not Found
+      </h1>
+      <p className="text-white/70">The page you're looking for doesn't exist.</p>
+    </div>
+  );
+}
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <GameProvider>
-            <Router>
-              <Layout>
-                <Routes>
-                  <Route path="/" element={<Features />} />
-                  <Route path="/features" element={<Features />} />
-                  <Route path="/optimization" element={<Optimization />} />
-                  <Route path="/monitoring" element={<Monitoring />} />
-                  <Route path="/reviews" element={<Reviews />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Layout>
-            </Router>
-            <Toaster />
-          </GameProvider>
-        </ThemeProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Features />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/benchmarks" element={<Benchmarks />} />
+          <Route path="/download" element={<Download />} />
+          <Route path="/purchase" element={<Purchase />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
+      <Toaster position="top-center" />
+    </Router>
   );
 }

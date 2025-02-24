@@ -20,31 +20,27 @@ const ALLOWED_COMMANDS = [
 ];
 
 // Execute PowerShell commands directly using node-powershell
-export async function executeCommand(command: string): Promise<string> {
+export async function executeCommand(command: string): Promise<void> {
   try {
-    const response = await fetch(`${API_BASE_URL}/execute`, {
+    // For PowerShell commands, wrap them in powershell.exe
+    const finalCommand = command.startsWith('powershell') ? command : `powershell.exe -NoProfile -NonInteractive -Command "${command}"`;
+    
+    // Use the run_command tool to execute the command
+    const response = await fetch('http://localhost:3001/api/system/execute', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ command }),
+      body: JSON.stringify({ command: finalCommand }),
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error('Failed to execute command');
     }
 
-    const data = await response.json();
-    return data.output || '';
+    return response.json();
   } catch (error) {
     console.error('Error executing command:', error);
-    
-    // For development, fall back to mock data if the server is not running
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Using mock data in development');
-      return getMockSystemData(command);
-    }
-    
     throw error;
   }
 };
