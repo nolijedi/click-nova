@@ -1,21 +1,25 @@
 import { OptimizationCard } from './OptimizationCard';
+import { OptimizationCTA } from './OptimizationCTA';
 import { optimizationCommands } from '@/data/commands';
 import { useGame } from '@/contexts/GameContext';
 import { executeCommand } from '@/api/system';
 import { toast } from 'sonner';
+import { useState } from 'react';
 
 export function OptimizationGrid() {
   const { addXp, completeAchievement } = useGame();
+  const [completedOptimizations, setCompletedOptimizations] = useState<string[]>([]);
+  const [totalXP, setTotalXP] = useState<number>(0);
 
-  const handleExecute = async (command: string, id: string, xp: number) => {
-    console.log(`[DEBUG] OptimizationGrid.handleExecute called with:`, { command, id, xp });
+  const handleExecute = async (command: string, id: string, xp: number): Promise<void> => {
     try {
       const result = await executeCommand(command);
-      console.log(`[DEBUG] Command execution result:`, result);
       
       // Add XP and complete achievement
       addXp(xp);
+      setTotalXP(prev => prev + xp);
       completeAchievement(id);
+      setCompletedOptimizations(prev => [...prev, id]);
       
       // Show success animation
       const element = document.getElementById(id);
@@ -27,8 +31,9 @@ export function OptimizationGrid() {
       }
 
       return result;
-    } catch (error) {
-      console.error('[DEBUG] Failed to execute command:', error);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+      console.error('[Error] Failed to execute command:', errorMessage);
       toast.error('Failed to execute command. Please try again.');
       throw error;
     }
@@ -52,6 +57,11 @@ export function OptimizationGrid() {
           </div>
         </div>
       ))}
+
+      <OptimizationCTA 
+        optimizedCount={completedOptimizations.length}
+        totalXP={totalXP}
+      />
     </div>
   );
 }
