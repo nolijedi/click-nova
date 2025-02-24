@@ -24,8 +24,16 @@ const ALLOWED_COMMANDS = [
   'Start-Process',
   'Get-Service',
   'Stop-Service',
+  'Set-Service',
   'ipconfig',
-  'Start-MpScan'
+  'Start-MpScan',
+  'Set-MpPreference',
+  'powercfg',
+  'bcdedit',
+  'reg',
+  'netsh',
+  'Dism.exe',
+  'wmic'
 ];
 
 function escapePowerShellCommand(command) {
@@ -130,6 +138,7 @@ async function getSystemMetricsWithRetry(retries = 3) {
       await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
     }
   }
+  throw new Error('Failed to get system metrics after retries');
 }
 
 app.get('/api/metrics', async (req, res) => {
