@@ -35,13 +35,13 @@ export function OptimizationGrid() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       {Object.entries(optimizationCommands).map(([category, commands]) => (
-        <div key={category} className="space-y-4">
-          <h2 className="text-2xl font-bold capitalize bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
+        <div key={category} className="space-y-2">
+          <h2 className="text-xl font-bold capitalize bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
             {category} Optimization
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {commands.map((cmd) => (
               <OptimizationCard
                 key={cmd.id}

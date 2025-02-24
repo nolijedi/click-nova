@@ -80,39 +80,40 @@ export function OptimizationCard({
         }}
       />
 
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-lg bg-${gradientFrom}/10`}>
-            <Icon className="h-5 w-5" />
+      <CardHeader className="p-4 pb-2">
+        <div className="flex items-center gap-2">
+          <div className={`p-1.5 rounded-lg bg-${gradientFrom}/10`}>
+            <Icon className="h-4 w-4" />
           </div>
-          <div className="flex-1">
-            <CardTitle className="text-lg flex items-center justify-between">
-              {title}
-              <div className="flex items-center gap-1 text-yellow-400 text-sm">
-                <Star className="h-4 w-4" />
-                <span>{xp} XP</span>
+          <div className="flex-1 min-w-0">
+            <CardTitle className="text-base flex items-center justify-between">
+              <span className="truncate">{title}</span>
+              <div className="flex items-center gap-1 text-yellow-400 text-xs ml-2 shrink-0">
+                <Star className="h-3 w-3" />
+                <span>{xp}</span>
               </div>
             </CardTitle>
-            <CardDescription>{description}</CardDescription>
+            <CardDescription className="text-xs line-clamp-1">{description}</CardDescription>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent>
-        <div className="space-y-4">
-          <div className="text-sm text-muted-foreground font-mono bg-black/20 p-2 rounded">
+      <CardContent className="p-4 pt-2">
+        <div className="space-y-2">
+          <code className="text-xs text-muted-foreground font-mono bg-black/20 p-1.5 rounded block truncate">
             {command}
-          </div>
+          </code>
 
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">
-              Type: {type.toUpperCase()}
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70">
+              {type}
             </span>
             <Button
+              size="sm"
               onClick={handleExecute}
               disabled={isRunning}
               className={cn(
-                "relative overflow-hidden",
+                "relative overflow-hidden text-xs py-1 h-7",
                 "bg-gradient-to-r",
                 `from-${gradientFrom}`,
                 `to-${gradientTo}`,
@@ -123,7 +124,7 @@ export function OptimizationCard({
             >
               {isRunning ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-1 h-3 w-3 animate-spin" />
                   Running...
                 </>
               ) : (
