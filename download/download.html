@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Click Nova Optimizer</title>
+    <style>
+        :root {
+            --neon-blue: #00ffff;
+            --neon-purple: #ff00ff;
+            --neon-green: #00ff9d;
+            --neon-yellow: #ffff00;
+            --dark-blue: #000d19;
+            --panel-bg: rgba(0, 13, 25, 0.75);
+            --border-glow: 0 0 25px rgba(0, 255, 255, 0.7);
+            --text-glow: 0 0 20px rgba(0, 255, 255, 0.8);
+            --intense-glow: 0 0 30px rgba(0, 255, 255, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .download-container {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            padding: 3rem;
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle at center,
+                rgba(0, 255, 255, 0.2),
+                transparent 70%
+            );
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--neon-green);
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .download-btn {
+            background: linear-gradient(90deg,
+                var(--neon-blue),
+                var(--neon-purple));
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: sweep 3s linear infinite;
+        }
+
+        @keyframes sweep {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        .download-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 2rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg,
+                var(--neon-blue),
+                var(--neon-purple),
+                var(--neon-green));
+            width: 0%;
+            transition: width 0.5s ease;
+            background-size: 200% 100%;
+            animation: gradientMove 2s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 100% 0%; }
+            100% { background-position: -100% 0%; }
+        }
+
+        .instructions {
+            margin-top: 2rem;
+            text-align: left;
+            padding: 1rem;
+            background: rgba(0, 13, 25, 0.5);
+            border-radius: 8px;
+        }
+
+        .instructions h3 {
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+        }
+
+        .instructions ol {
+            padding-left: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="download-container">
+        <div class="success-icon">✨</div>
+        <h1>Thank You for Your Purchase!</h1>
+        <p>Your download will begin automatically in a few seconds...</p>
+        
+        <div class="download-progress">
+            <div class="progress-bar" id="downloadProgress"></div>
+        </div>
+        
+        <button class="download-btn" onclick="startDownload()">
+            Download Now
+        </button>
+
+        <div class="instructions">
+            <h3>Installation Instructions:</h3>
+            <ol>
+                <li>Download the Click Nova Optimizer installer</li>
+                <li>Run the installer as administrator</li>
+                <li>Follow the setup wizard instructions</li>
+                <li>Launch Click Nova Optimizer</li>
+                <li>Enter your license key when prompted</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Simulate download progress
+        function startDownload() {
+            const progressBar = document.getElementById('downloadProgress');
+            const downloadBtn = document.querySelector('.download-btn');
+            let progress = 0;
+
+            downloadBtn.disabled = true;
+            downloadBtn.textContent = 'Downloading...';
+
+            const interval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    downloadBtn.textContent = 'Download Complete!';
+                    // Here you would trigger the actual file download
+                    setTimeout(() => {
+                        const link = document.createElement('a');
+                        link.href = 'ClickNovaOptimizer.exe';
+                        link.download = 'ClickNovaOptimizer.exe';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }, 500);
+                }
+            }, 50);
+        }
+
+        // Start download automatically
+        window.addEventListener('load', () => {
+            setTimeout(startDownload, 1500);
+        });
+    </script>
+</body>
+</html>

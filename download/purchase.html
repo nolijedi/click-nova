@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Click Nova Optimizer</title>
+    <style>
+        :root {
+            --neon-blue: #00ffff;
+            --neon-purple: #ff00ff;
+            --neon-green: #00ff9d;
+            --neon-yellow: #ffff00;
+            --dark-blue: #000d19;
+            --panel-bg: rgba(0, 13, 25, 0.75);
+            --border-glow: 0 0 25px rgba(0, 255, 255, 0.7);
+            --text-glow: 0 0 20px rgba(0, 255, 255, 0.8);
+            --intense-glow: 0 0 30px rgba(0, 255, 255, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .purchase-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .purchase-info {
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .purchase-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg,
+                rgba(0, 255, 255, 0.1),
+                rgba(255, 0, 255, 0.1));
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .features-list li {
+            margin: 1rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            color: var(--neon-blue);
+        }
+
+        .price-tag {
+            font-size: 3rem;
+            color: var(--neon-green);
+            text-shadow: var(--text-glow);
+            margin: 2rem 0;
+        }
+
+        .checkout-form {
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-purple);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--neon-blue);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 13, 25, 0.8);
+            border: 1px solid var(--neon-blue);
+            border-radius: 4px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .purchase-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(90deg,
+                var(--neon-purple),
+                var(--neon-blue));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .purchase-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: btnSweep 3s linear infinite;
+        }
+
+        @keyframes btnSweep {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        .purchase-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .guarantee {
+            text-align: center;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--neon-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="purchase-container">
+        <div class="purchase-info">
+            <h1>Click Nova Optimizer</h1>
+            <div class="price-tag">$1.99</div>
+            <p>Transform your system's performance with our advanced optimization suite</p>
+            
+            <ul class="features-list">
+                <li>Instant Performance Boost</li>
+                <li>Smart System Optimization</li>
+                <li>Real-time Performance Monitoring</li>
+                <li>Automatic Background Optimization</li>
+                <li>24/7 Priority Support</li>
+                <li>Regular Updates & Improvements</li>
+                <li>30-Day Money Back Guarantee</li>
+            </ul>
+        </div>
+
+        <div class="checkout-form">
+            <h2>Secure Checkout</h2>
+            <form id="payment-form" onsubmit="return handlePurchase(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="card">Card Number</label>
+                    <input type="text" id="card" placeholder="1234 5678 9012 3456" required>
+                </div>
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label for="expiry">Expiry Date</label>
+                        <input type="text" id="expiry" placeholder="MM/YY" required>
+                    </div>
+                    <div>
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" required>
+                    </div>
+                </div>
+                <button type="submit" class="purchase-btn">
+                    Purchase & Download Now
+                </button>
+            </form>
+            <div class="guarantee">
+                30-Day Money Back Guarantee
+            </div>
+            <div class="secure-badge">
+                🔒 Secure 256-bit SSL encrypted payment
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handlePurchase(event) {
+            event.preventDefault();
+            // Here you would integrate with your payment processor
+            // For now, we'll simulate a successful purchase
+            const button = event.target.querySelector('button');
+            button.textContent = 'Processing...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                window.location.href = 'download.html';
+            }, 2000);
+
+            return false;
+        }
+    </script>
+</body>
+</html>

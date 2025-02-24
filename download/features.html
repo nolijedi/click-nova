@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - Click Nova Optimizer</title>
+    <style>
+        :root {
+            --neon-blue: #00ffff;
+            --neon-purple: #ff00ff;
+            --neon-green: #00ff9d;
+            --neon-yellow: #ffff00;
+            --dark-blue: #000d19;
+            --panel-bg: rgba(0, 13, 25, 0.75);
+            --border-glow: 0 0 25px rgba(0, 255, 255, 0.7);
+            --text-glow: 0 0 20px rgba(0, 255, 255, 0.8);
+            --intense-glow: 0 0 30px rgba(0, 255, 255, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--border-glow);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg,
+                rgba(0, 255, 255, 0.1),
+                rgba(255, 0, 255, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--neon-blue);
+            text-shadow: var(--text-glow);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--neon-green);
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .performance-chart {
+            width: 100%;
+            height: 400px;
+            margin: 2rem 0;
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-purple);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .chart-bar {
+            height: 40px;
+            margin: 1rem 0;
+            background: linear-gradient(90deg,
+                var(--neon-blue),
+                var(--neon-purple));
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: barSweep 2s linear infinite;
+        }
+
+        @keyframes barSweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .chart-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--neon-blue);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 3rem 0;
+            color: var(--neon-blue);
+            text-shadow: var(--text-glow);
+        }
+
+        .benchmark-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .benchmark-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .benchmark-card {
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-green);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .benchmark-value {
+            font-size: 3rem;
+            color: var(--neon-green);
+            margin: 1rem 0;
+            text-shadow: var(--text-glow);
+        }
+
+        .benchmark-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the same logo and nav sections from index.html -->
+    
+    <h1 class="section-title">Advanced Features</h1>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3 class="feature-title">Instant Performance Boost</h3>
+            <p class="feature-description">
+                Experience up to 300% faster system performance with our advanced optimization algorithms.
+                Instantly free up memory and optimize system resources.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <h3 class="feature-title">Game Mode Optimization</h3>
+            <p class="feature-description">
+                Automatically detect and optimize your system for gaming. Boost FPS and reduce input lag
+                for a competitive edge.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔄</div>
+            <h3 class="feature-title">Real-time Monitoring</h3>
+            <p class="feature-description">
+                Track system performance in real-time with our advanced monitoring dashboard.
+                Identify and fix bottlenecks instantly.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3 class="feature-title">System Protection</h3>
+            <p class="feature-description">
+                Automatic backup and restore points ensure your system stays safe during optimization.
+                Roll back changes with one click.
+            </p>
+        </div>
+    </div>
+
+    <div class="benchmark-container">
+        <h2 class="section-title">Performance Metrics</h2>
+        
+        <div class="performance-chart">
+            <div class="chart-label">
+                <span>Boot Time</span>
+                <span>-65%</span>
+            </div>
+            <div class="chart-bar" style="width: 85%;"></div>
+
+            <div class="chart-label">
+                <span>Game FPS</span>
+                <span>+120%</span>
+            </div>
+            <div class="chart-bar" style="width: 95%;"></div>
+
+            <div class="chart-label">
+                <span>Memory Usage</span>
+                <span>-45%</span>
+            </div>
+            <div class="chart-bar" style="width: 75%;"></div>
+
+            <div class="chart-label">
+                <span>System Response</span>
+                <span>+200%</span>
+            </div>
+            <div class="chart-bar" style="width: 90%;"></div>
+        </div>
+
+        <div class="benchmark-grid">
+            <div class="benchmark-card">
+                <div class="benchmark-value">300%</div>
+                <div class="benchmark-label">Faster System Performance</div>
+            </div>
+            <div class="benchmark-card">
+                <div class="benchmark-value">65%</div>
+                <div class="benchmark-label">Less Memory Usage</div>
+            </div>
+            <div class="benchmark-card">
+                <div class="benchmark-value">120%</div>
+                <div class="benchmark-label">FPS Improvement</div>
+            </div>
+            <div class="benchmark-card">
+                <div class="benchmark-value">45%</div>
+                <div class="benchmark-label">Cooler CPU Temperature</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
