@@ -76,8 +76,8 @@ To view the live site:
 3. Make sure:
    - Source is set to "Deploy from a branch"
    - Branch is set to "gh-pages" and "/(root)"
-4. After deployment, your site will be available at:
-   `https://<your-github-username>.github.io/click-nova/`
+4. Your site is available at:
+   `https://nolijedi.github.io/click-nova/`
 
 ### Manual Deployment
 
