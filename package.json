@@ -8,7 +8,7 @@
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "dev:frontend": "vite",
     "dev:backend": "ts-node-dev --respawn --transpile-only server/system-server.ts",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node scripts/copy-assets.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "build:dev": "vite build --mode development",
