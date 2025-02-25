@@ -22,5 +22,8 @@ export default defineConfig({
         },
       },
     },
+    // Copy public assets to dist
+    copyPublicDir: true,
   },
+  publicDir: 'public',
 })
