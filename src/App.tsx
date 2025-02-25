@@ -6,6 +6,7 @@ import Benchmarks from '@/pages/Benchmarks';
 import Download from '@/pages/Download';
 import Purchase from '@/pages/Purchase';
 import Support from '@/pages/Support';
+import { DownloadPage } from './components/download/DownloadPage';
 
 // Simple NotFound component
 function NotFound() {
@@ -27,9 +28,13 @@ export default function App() {
           <Route path="/" element={<Features />} />
           <Route path="/features" element={<Features />} />
           <Route path="/benchmarks" element={<Benchmarks />} />
-          <Route path="/download" element={<Download />} />
           <Route path="/purchase" element={<Purchase />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/download" element={
+            <Route path="/" element={<Layout />}>
+              <Route index element={<DownloadPage />} />
+            </Route>
+          } />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

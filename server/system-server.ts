@@ -2,8 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const { exec } = require('child_process');
 const { promisify } = require('util');
+const path = require('path');
+const fs = require('fs').promises;
+const os = require('os');
 
-const execAsync = promisify(exec);
 const app = express();
 const port = 3001;
 
@@ -12,68 +14,63 @@ app.use(express.json());
 
 // List of allowed PowerShell commands for security
 const ALLOWED_COMMANDS = [
-  'Get-Process',
-  'Get-Counter',
-  'Get-PhysicalDisk',
-  'Get-CimInstance',
   'Get-Volume',
   'Optimize-Volume',
+  'Get-ChildItem',
   'Remove-Item',
-  'Get-StorageReliabilityCounter',
-  'cleanmgr',
-  'Start-Process',
-  'Get-Service',
-  'Stop-Service',
-  'Set-Service',
   'ipconfig',
-  'Start-MpScan',
-  'Set-MpPreference',
-  'powercfg',
-  'bcdedit',
-  'reg',
-  'netsh',
-  'Dism.exe',
-  'wmic'
+  'cleanmgr',
+  'Write-Output',
+  'Write-Warning'
 ];
 
-function escapePowerShellCommand(command) {
-  // Escape double quotes and wrap the entire command in double quotes
-  return `"${command.replace(/"/g, '`"')}"`;
+// Validate PowerShell command for security
+function isCommandAllowed(command: string): boolean {
+  return ALLOWED_COMMANDS.some(allowed => command.includes(allowed));
 }
 
-async function executeCommand(command) {
+// Execute PowerShell command safely
+async function executePowerShellCommand(command: string): Promise<{ stdout: string; stderr: string }> {
   try {
-    // Special handling for cleanmgr.exe
-    if (command.includes('cleanmgr.exe')) {
-      const { stdout, stderr } = await execAsync('powershell -Command "Start-Process cleanmgr.exe -ArgumentList \'/sagerun:1\' -Wait -NoNewWindow"');
-      if (stderr) throw new Error(stderr);
-      return stdout;
-    }
-
-    // Special handling for ipconfig
-    if (command.includes('ipconfig')) {
-      const { stdout, stderr } = await execAsync(command);
-      if (stderr) throw new Error(stderr);
-      return stdout;
-    }
-
-    // Security check: Only allow whitelisted commands
-    if (!ALLOWED_COMMANDS.some(cmd => command.toLowerCase().startsWith(cmd.toLowerCase()))) {
-      throw new Error('Command not allowed for security reasons');
-    }
-
-    const escapedCommand = escapePowerShellCommand(command);
-    const { stdout, stderr } = await execAsync(`powershell -NoProfile -NonInteractive -Command ${escapedCommand}`);
+    // Create temp script with proper error handling
+    const scriptContent = `
+      $ErrorActionPreference = 'Stop'
+      try {
+        ${command}
+      } catch {
+        Write-Warning $_.Exception.Message
+        exit 1
+      }
+    `;
     
-    if (stderr) {
-      console.error('Command error:', stderr);
-      throw new Error(stderr);
-    }
+    const scriptPath = path.join(os.tmpdir(), `script-${Date.now()}.ps1`);
+    await fs.writeFile(scriptPath, scriptContent);
 
-    return stdout;
+    // Execute with proper encoding and error handling
+    const psCommand = `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${scriptPath}" -OutputFormat Text`;
+    
+    return new Promise((resolve, reject) => {
+      exec(psCommand, { maxBuffer: 1024 * 1024 }, async (error, stdout, stderr) => {
+        // Clean up script
+        try {
+          await fs.unlink(scriptPath);
+        } catch (e) {
+          console.warn('Failed to clean up script file:', e);
+        }
+
+        if (error && error.code === 'ENOENT') {
+          reject(new Error('PowerShell is not available'));
+          return;
+        }
+
+        resolve({
+          stdout: stdout || '',
+          stderr: stderr || (error ? error.message : '')
+        });
+      });
+    });
   } catch (error) {
-    console.error('Error executing command:', error);
-    throw error;
+    throw new Error(`Failed to execute PowerShell command: ${error.message}`);
   }
 }
 
@@ -89,8 +86,8 @@ async function getSystemMetricsWithRetry(retries = 3) {
           Write-Output "0"
         }
       `;
-      const cpuResult = await executeCommand(cpuCommand);
-      const cpuUsage = parseFloat(cpuResult) || 0;
+      const cpuResult = await executePowerShellCommand(cpuCommand);
+      const cpuUsage = parseFloat(cpuResult.stdout) || 0;
 
       // Get memory usage with error handling
       const memoryCommand = `
@@ -105,8 +102,8 @@ async function getSystemMetricsWithRetry(retries = 3) {
           Write-Output "0|0|0"
         }
       `;
-      const memoryResult = await executeCommand(memoryCommand);
-      const [usedMem, totalMem, memPercentage] = memoryResult.split('|').map(Number);
+      const memoryResult = await executePowerShellCommand(memoryCommand);
+      const [usedMem, totalMem, memPercentage] = memoryResult.stdout.split('|').map(Number);
 
       // Get disk usage with error handling
       const diskCommand = `
@@ -120,14 +117,14 @@ async function getSystemMetricsWithRetry(retries = 3) {
           Write-Output "0|0|0"
         }
       `;
-      const diskResult = await executeCommand(diskCommand);
-      const [usedDisk, totalDisk, diskPercentage] = diskResult.split('|').map(Number);
+      const diskResult = await executePowerShellCommand(diskCommand);
+      const [usedDisk, totalDisk, diskPercentage] = diskResult.stdout.split('|').map(Number);
 
       return {
         cpuUsage,
         memoryUsage: memPercentage,
         diskUsage: diskPercentage,
-        temperature: 0, // Removed temperature as it's not reliably available
+        temperature: 0,
         totalMemory: totalMem,
         freeMemory: totalMem - usedMem,
         diskTotal: totalDisk,
@@ -153,18 +150,25 @@ app.get('/api/metrics', async (req, res) => {
 
 app.post('/api/execute', async (req, res) => {
   try {
-    const { command } = req.body;
+    const { command, type } = req.body;
     if (!command) {
       return res.status(400).json({ error: 'Command is required' });
     }
-    const result = await executeCommand(command);
-    res.json({ output: result });
+    if (type === 'powershell') {
+      const result = await executePowerShellCommand(command);
+      res.json({ output: result.stdout, error: result.stderr });
+    } else {
+      const execAsync = promisify(exec);
+      const result = await execAsync(command);
+      res.json({ output: result.stdout });
+    }
   } catch (error) {
     console.error('Command execution error:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
+// Execute system command endpoint
 app.post('/api/system/execute', async (req, res) => {
   try {
     const { command } = req.body;
@@ -172,11 +176,18 @@ app.post('/api/system/execute', async (req, res) => {
       return res.status(400).json({ error: 'Command is required' });
     }
 
-    console.log('Executing command:', command);
-    const output = await executeCommand(command);
-    res.json({ output });
+    // Validate command for security
+    if (!isCommandAllowed(command)) {
+      return res.status(403).json({ error: 'Command not allowed' });
+    }
+
+    const result = await executePowerShellCommand(command);
+    res.json({
+      output: result.stdout,
+      error: result.stderr
+    });
   } catch (error) {
-    console.error('Error in /api/system/execute:', error);
+    console.error('[Error] Command execution failed:', error);
     res.status(500).json({ error: error.message });
   }
 });

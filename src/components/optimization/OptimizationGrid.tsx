@@ -6,38 +6,49 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Zap } from 'lucide-react';
 
+const API_BASE_URL = 'http://localhost:3001/api/system';
+
 export function OptimizationGrid() {
   const [completedOptimizations, setCompletedOptimizations] = useState<string[]>([]);
   const [isOptimizingAll, setIsOptimizingAll] = useState(false);
 
-  const handleExecute = async (command: string, id: string, setOutput: (output: string) => void): Promise<void> => {
+  const handleExecute = async (command: string) => {
     try {
-      // For PowerShell commands, wrap them in powershell.exe
-      const finalCommand = command.startsWith('powershell') ? command : `powershell.exe -NoProfile -NonInteractive -Command "${command}"`;
-
-      // Execute the command
-      const response = await fetch('http://localhost:3001/api/system/execute', {
+      console.log('Executing command:', command);
+      const response = await fetch(`${API_BASE_URL}/execute`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ command: finalCommand }),
+        body: JSON.stringify({ command }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to execute command');
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to execute command');
       }
 
-      const data = await response.json();
-      setOutput(data.output || 'Command executed successfully');
-      setCompletedOptimizations(prev => [...prev, id]);
+      const result = await response.json();
       
-      toast.success('Optimization completed successfully');
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
-      console.error('[Error] Failed to execute command:', errorMessage);
-      setOutput(`Error: ${errorMessage}`);
-      toast.error('Failed to execute command. Please try again.');
+      if (result.error) {
+        console.error('[Error]', result.error);
+        toast.error('Command failed: ' + result.error);
+      } else if (result.output) {
+        console.log('[Output]', result.output);
+        const lines = result.output.split('\n');
+        lines.forEach(line => {
+          if (line.toLowerCase().includes('warning:')) {
+            toast.warning(line);
+          } else if (line.trim()) {
+            toast.success(line);
+          }
+        });
+      }
+
+      return result;
+    } catch (error) {
+      console.error('[Error] Failed to execute command:', error);
+      toast.error(error.message);
       throw error;
     }
   };
@@ -51,13 +62,13 @@ export function OptimizationGrid() {
       
       // Get all commands
       const allCommands = Object.values(optimizationCommands).flatMap(commands => 
-        commands.map(cmd => ({ command: cmd.command, id: cmd.id }))
+        commands.map(cmd => ({ command: cmd.command, type: cmd.type, id: cmd.id }))
       );
 
       // Execute all commands in sequence
       for (const cmd of allCommands) {
         if (!completedOptimizations.includes(cmd.id)) {
-          await handleExecute(cmd.command, cmd.id, () => {});
+          await handleExecute(cmd.command);
           // Small delay between commands
           await new Promise(resolve => setTimeout(resolve, 500));
         }
@@ -100,37 +111,20 @@ export function OptimizationGrid() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {Object.entries(optimizationCommands).map(([category, commands]) => (
-          <motion.div
-            key={category}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-black/40 p-6 rounded-2xl border border-white/10 backdrop-blur-sm space-y-4"
-          >
-            <h2 className="text-xl font-bold capitalize bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
-              {category} Optimization
-            </h2>
-            <div className="grid gap-3">
-              {commands.map((cmd) => (
-                <OptimizationCard
-                  key={cmd.id}
-                  id={cmd.id}
-                  title={cmd.title}
-                  description={cmd.description}
-                  icon={cmd.icon}
-                  command={cmd.command}
-                  type={cmd.type}
-                  gradientFrom={cmd.gradientFrom}
-                  gradientTo={cmd.gradientTo}
-                  isComplete={completedOptimizations.includes(cmd.id)}
-                  onExecute={setOutput => handleExecute(cmd.command, cmd.id, setOutput)}
-                />
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      {Object.entries(optimizationCommands).map(([category, commands]) => (
+        <div key={category} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {commands.map((command) => (
+              <OptimizationCard
+                key={command.id}
+                {...command}
+                onExecute={handleExecute}
+                isCompleted={completedOptimizations.includes(command.id)}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

@@ -60,6 +60,39 @@ This project is built with .
 - shadcn-ui
 - Tailwind CSS
 
+## GitHub Pages Deployment
+
+This project is configured to deploy automatically to GitHub Pages. Here's how it works:
+
+1. The project is built using Vite and configured to work with GitHub Pages
+2. When you push to the `main` branch, GitHub Actions automatically:
+   - Builds the project
+   - Deploys it to GitHub Pages
+
+To view the live site:
+
+1. Go to your repository settings
+2. Navigate to "Pages" under "Code and automation"
+3. Make sure:
+   - Source is set to "Deploy from a branch"
+   - Branch is set to "gh-pages" and "/(root)"
+4. After deployment, your site will be available at:
+   `https://<your-github-username>.github.io/turbo-smooth-optimizer/`
+
+### Manual Deployment
+
+If you need to deploy manually:
+
+```sh
+# Build the project
+npm run build
+
+# Deploy to GitHub Pages
+git add dist -f
+git commit -m "Deploy to GitHub Pages"
+git subtree push --prefix dist origin gh-pages
+```
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/b1ba0359-c9cf-4160-8339-3a27113f635a) and click on Share -> Publish.
