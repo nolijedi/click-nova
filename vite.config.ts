@@ -13,10 +13,13 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    assetsDir: '',
+    assetsDir: 'assets',
     sourcemap: true,
     rollupOptions: {
       output: {
+        assetFileNames: 'assets/[name].[ext]',
+        chunkFileNames: 'assets/[name].js',
+        entryFileNames: 'assets/[name].js',
         manualChunks: {
           vendor: ['react', 'react-dom'],
         },
