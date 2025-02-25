@@ -20,17 +20,6 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
         },
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name.split('.')
-          const ext = info[info.length - 1]
-          if (/\.(mp4|webm|ogg)$/.test(assetInfo.name)) {
-            return `assets/videos/[name].[hash].[ext]`
-          }
-          if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/.test(assetInfo.name)) {
-            return `assets/images/[name].[hash].[ext]`
-          }
-          return `assets/[name].[hash].[ext]`
-        },
       },
     },
   },
