@@ -60,6 +60,10 @@ This project is built with .
 - shadcn-ui
 - Tailwind CSS
 
+## Live Site
+
+Visit the live site at: `https://nolijedi.github.io/click-nova/`
+
 ## GitHub Pages Deployment
 
 This project is configured to deploy automatically to GitHub Pages. Here's how it works:
