@@ -77,7 +77,7 @@ To view the live site:
    - Source is set to "Deploy from a branch"
    - Branch is set to "gh-pages" and "/(root)"
 4. After deployment, your site will be available at:
-   `https://<your-github-username>.github.io/turbo-smooth-optimizer/`
+   `https://<your-github-username>.github.io/click-nova/`
 
 ### Manual Deployment
 
