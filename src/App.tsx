@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Toaster } from '@/components/ui/sonner';
@@ -23,21 +24,15 @@ function NotFound() {
 export default function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Features />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/benchmarks" element={<Benchmarks />} />
-          <Route path="/purchase" element={<Purchase />} />
-          <Route path="/support" element={<Support />} />
-          <Route path="/download" element={
-            <Route path="/" element={<Layout />}>
-              <Route index element={<DownloadPage />} />
-            </Route>
-          } />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/" element={<Layout><Features /></Layout>} />
+        <Route path="/features" element={<Layout><Features /></Layout>} />
+        <Route path="/benchmarks" element={<Layout><Benchmarks /></Layout>} />
+        <Route path="/purchase" element={<Layout><Purchase /></Layout>} />
+        <Route path="/support" element={<Layout><Support /></Layout>} />
+        <Route path="/download" element={<Layout><DownloadPage /></Layout>} />
+        <Route path="*" element={<Layout><NotFound /></Layout>} />
+      </Routes>
       <Toaster position="top-center" />
     </Router>
   );

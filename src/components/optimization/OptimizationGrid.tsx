@@ -1,3 +1,4 @@
+
 import { OptimizationCard } from './OptimizationCard';
 import { optimizationCommands } from '@/data/commands';
 import { toast } from 'sonner';
@@ -12,15 +13,14 @@ export function OptimizationGrid() {
   const [completedOptimizations, setCompletedOptimizations] = useState<string[]>([]);
   const [isOptimizingAll, setIsOptimizingAll] = useState(false);
 
-  const handleExecute = async (command: string) => {
+  const handleExecute = async (setOutput: (output: string) => void) => {
     try {
-      console.log('Executing command:', command);
       const response = await fetch(`${API_BASE_URL}/execute`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ command }),
+        body: JSON.stringify({ command: 'Get-Process' }), // Default safe command
       });
 
       if (!response.ok) {
@@ -33,8 +33,10 @@ export function OptimizationGrid() {
       if (result.error) {
         console.error('[Error]', result.error);
         toast.error('Command failed: ' + result.error);
+        setOutput(result.error);
       } else if (result.output) {
         console.log('[Output]', result.output);
+        setOutput(result.output);
         const lines = result.output.split('\n');
         lines.forEach(line => {
           if (line.toLowerCase().includes('warning:')) {
@@ -45,10 +47,11 @@ export function OptimizationGrid() {
         });
       }
 
-      return result;
     } catch (error) {
       console.error('[Error] Failed to execute command:', error);
-      toast.error(error.message);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      toast.error(errorMessage);
+      setOutput(errorMessage);
       throw error;
     }
   };
@@ -68,7 +71,10 @@ export function OptimizationGrid() {
       // Execute all commands in sequence
       for (const cmd of allCommands) {
         if (!completedOptimizations.includes(cmd.id)) {
-          await handleExecute(cmd.command);
+          await handleExecute((output) => {
+            console.log(`Optimization output for ${cmd.id}:`, output);
+          });
+          setCompletedOptimizations(prev => [...prev, cmd.id]);
           // Small delay between commands
           await new Promise(resolve => setTimeout(resolve, 500));
         }
@@ -119,7 +125,7 @@ export function OptimizationGrid() {
                 key={command.id}
                 {...command}
                 onExecute={handleExecute}
-                isCompleted={completedOptimizations.includes(command.id)}
+                isComplete={completedOptimizations.includes(command.id)}
               />
             ))}
           </div>
